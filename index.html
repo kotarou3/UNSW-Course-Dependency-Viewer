@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>UNSW Course Dependency Viewer</title>
+
+        <link href="lib/bootstrap-3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="style.css" rel="stylesheet" type="text/css" />
+
+        <script src="lib/prfun-1.0.1.js"></script>
+        <script src="lib/jquery-2.1.1.min.js"></script>
+        <script src="lib/d3-3.4.13.min.js"></script>
+        <script src="lib/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+        <script src="lib/jsep-0.2.9.js"></script>
+        <script src="lib/viz-0.0.3.js"></script>
+        <script src="grapher.js"></script>
+    </head>
+    <body>
+        <div id="output"></div>
+        <div id="search">
+            <div id="search-query">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Course Code" />
+                    <div id="settings" class="input-group-addon btn btn-default" data-toggle="modal" data-target="#settings-modal"><span class="glyphicon glyphicon-cog"></span></div>
+                    <div id="settings" class="input-group-addon btn btn-default" data-toggle="modal" data-target="#help-modal"><span class="glyphicon glyphicon-flag"></span></div>
+                </div>
+            </div>
+            <div id="search-result">
+                <table id="data" class="table table-condensed"></table>
+                <div id="actions">
+                    <a id="edit-requirements" class="btn btn-default" data-toggle="modal" data-target="#edit-requirements-modal">Edit Requirements</a>
+                    <a id="centre-on-graph" class="btn btn-default">Centre on Graph</a>
+                </div>
+            </div>
+        </div>
+        <div id="settings-modal" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Settings</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="settings-root-courses" class="col-sm-3 control-label">Root Courses</label>
+                                <div class="col-sm-9"><input id="settings-root-courses" type="text" class="form-control" placeholder="Courses to draw the graph from" /></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-completed-courses" class="col-sm-3 control-label">Completed Courses</label>
+                                <div class="col-sm-9"><input id="settings-completed-courses" type="text" class="form-control" placeholder="Courses to stop drawing the graph at (Optional)" /></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-handbook-year" class="col-sm-3 control-label">Handbook Year</label>
+                                <div class="col-sm-9">
+                                    <select id="settings-handbook-year" class="form-control">
+                                        <option value="2015" selected="selected">2015</option>
+                                        <option value="2014">2014</option>
+                                        <option value="2013">2013</option>
+                                        <option value="2012">2012</option>
+                                        <option value="2011">2011</option>
+                                        <option value="2010">2010</option>
+                                        <option value="2009">2009</option>
+                                        <option value="2008">2008</option>
+                                        <option value="2007">2007</option>
+                                        <option value="2006">2006</option>
+                                        <option value="2005">2005</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <div class="checkbox">
+                                        <input id="settings-hide-unknown-courses" type="checkbox" checked="checked" />
+                                        <label for="settings-hide-unknown-courses">Hide Unknown Courses</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <input id="settings-hide-prerequisite-courses" type="checkbox" />
+                                        <label for="settings-hide-prerequisite-courses">Hide Prerequisite Courses</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <input id="settings-hide-corequisite-courses" type="checkbox" />
+                                        <label for="settings-hide-corequisite-courses">Hide Corequisite Courses</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <input id="settings-hide-equivalent-courses" type="checkbox" />
+                                        <label for="settings-hide-equivalent-courses">Hide Equivalent Courses</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <input id="settings-hide-excluded-courses" type="checkbox" checked="checked" />
+                                        <label for="settings-hide-excluded-courses">Hide Excluded Courses</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button id="save-settings" type="button" class="btn btn-primary">Apply</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="help-modal" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Help</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>TODO: Better help</p>
+
+                        <h4>Courses</h4>
+                        <p>Red outlined courses means automatic parsing of requirements failed and need to be manually reviewed. Thick bordered courses are the root courses.</p>
+
+                        <h4>Paths</h4>
+                        <p>Black are prerequisite courses. Blue are corequisite courses. Green are equivalent courses. Red are excluded courses.</p>
+
+                        <p><a href="https://github.com/kotarou3/UNSW-Course-Dependency-Viewer" target="_blank">Source</a></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="edit-requirements-modal" class="modal fade">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">×</button>
+                        <h4 class="modal-title">Editing Requirements</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div id="requirements-error" class="alert alert-danger fade"></div>
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Requirements</label>
+                                <div class="col-sm-9"><p id="requirements" class="form-control-static"></p></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="prerequisite-courses" class="col-sm-3 control-label">Prerequisite Courses</label>
+                                <div class="col-sm-9"><input id="prerequisite-courses" type="text" class="form-control" placeholder="Prerequisite Courses" /></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="corequisite-courses" class="col-sm-3 control-label">Corequisite Courses</label>
+                                <div class="col-sm-9"><input id="corequisite-courses" type="text" class="form-control" placeholder="Corequisite Courses" /></div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                        <button id="save-requirements" type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

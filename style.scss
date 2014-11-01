@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+}
+
+#output {
+    height: 100vh;
+    overflow: hidden;
+    cursor: default;
+
+    .node, .edge {
+        text {
+            font-size: 90%;
+        }
+        polygon, ellipse, path {
+            fill: none;
+            stroke: black;
+        }
+        polygon, ellipse {
+            pointer-events: all;
+        }
+
+        cursor: pointer;
+    }
+    .edge > polygon {
+        fill: black;
+    }
+    .course > text:first-of-type {
+        font-weight: bold;
+    }
+
+    @mixin node-edge-colour($colour) {
+        path, polygon, ellipse {
+            stroke: $colour;
+        }
+        &.edge polygon {
+            fill: $colour;
+        }
+    }
+
+    .equivalent {
+        @include node-edge-colour(green);
+    }
+    .excluded {
+        @include node-edge-colour(red);
+    }
+    .corequisite {
+        @include node-edge-colour(blue);
+    }
+
+    .highlighted {
+        @include node-edge-colour(orange);
+    }
+    .selected {
+        @include node-edge-colour(darkgoldenrod);
+    }
+    .chosen {
+        @include node-edge-colour(darkgoldenrod);
+        &.node polygon {
+            stroke-width: 0.2em;
+        }
+    }
+    .incomplete {
+        @include node-edge-colour(red);
+    }
+}
+
+#search {
+    position: absolute;
+    top: 3em;
+    left: 3em;
+    width: 40em;
+
+    padding: 0.5em;
+    background-color: #eee;
+    border-radius: 0.5em;
+
+    opacity: 0.5;
+    &:hover, &.active {
+        opacity: 0.95;
+    }
+
+    #search-result {
+        display: none;
+    }
+    #data {
+        width: 100%;
+        th {
+            width: 25%;
+        }
+
+        font-size: 80%;
+    }
+    #actions {
+        width: 100%;
+        display: table;
+        table-layout: fixed;
+        * {
+            display: table-cell;
+            text-align: center;
+        }
+    }
+}
+
+#requirements-error {
+    display: none;
+}

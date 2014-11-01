@@ -1,0 +1,79 @@
+body {
+  margin: 0; }
+
+#output {
+  height: 100vh;
+  overflow: hidden;
+  cursor: default; }
+  #output .node, #output .edge {
+    cursor: pointer; }
+    #output .node text, #output .edge text {
+      font-size: 90%; }
+    #output .node polygon, #output .node ellipse, #output .node path, #output .edge polygon, #output .edge ellipse, #output .edge path {
+      fill: none;
+      stroke: black; }
+    #output .node polygon, #output .node ellipse, #output .edge polygon, #output .edge ellipse {
+      pointer-events: all; }
+  #output .edge > polygon {
+    fill: black; }
+  #output .course > text:first-of-type {
+    font-weight: bold; }
+  #output .equivalent path, #output .equivalent polygon, #output .equivalent ellipse {
+    stroke: green; }
+  #output .equivalent.edge polygon {
+    fill: green; }
+  #output .excluded path, #output .excluded polygon, #output .excluded ellipse {
+    stroke: red; }
+  #output .excluded.edge polygon {
+    fill: red; }
+  #output .corequisite path, #output .corequisite polygon, #output .corequisite ellipse {
+    stroke: blue; }
+  #output .corequisite.edge polygon {
+    fill: blue; }
+  #output .highlighted path, #output .highlighted polygon, #output .highlighted ellipse {
+    stroke: orange; }
+  #output .highlighted.edge polygon {
+    fill: orange; }
+  #output .selected path, #output .selected polygon, #output .selected ellipse {
+    stroke: darkgoldenrod; }
+  #output .selected.edge polygon {
+    fill: darkgoldenrod; }
+  #output .chosen path, #output .chosen polygon, #output .chosen ellipse {
+    stroke: darkgoldenrod; }
+  #output .chosen.edge polygon {
+    fill: darkgoldenrod; }
+  #output .chosen.node polygon {
+    stroke-width: 0.2em; }
+  #output .incomplete path, #output .incomplete polygon, #output .incomplete ellipse {
+    stroke: red; }
+  #output .incomplete.edge polygon {
+    fill: red; }
+
+#search {
+  position: absolute;
+  top: 3em;
+  left: 3em;
+  width: 40em;
+  padding: 0.5em;
+  background-color: #eee;
+  border-radius: 0.5em;
+  opacity: 0.5; }
+  #search:hover, #search.active {
+    opacity: 0.95; }
+  #search #search-result {
+    display: none; }
+  #search #data {
+    width: 100%;
+    font-size: 80%; }
+    #search #data th {
+      width: 25%; }
+  #search #actions {
+    width: 100%;
+    display: table;
+    table-layout: fixed; }
+    #search #actions * {
+      display: table-cell;
+      text-align: center; }
+
+#requirements-error {
+  display: none; }
