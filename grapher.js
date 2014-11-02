@@ -479,8 +479,8 @@ function setupSettings() {
     }
 
     function saveSettings() {
-        settings.courses = $("#settings-root-courses").val().split(/[ ,]+/);
-        settings.completedCourses = $("#settings-completed-courses").val().split(/[ ,]+/);
+        settings.courses = $("#settings-root-courses").val().toUpperCase().split(/[ ,]+/);
+        settings.completedCourses = $("#settings-completed-courses").val().toUpperCase().split(/[ ,]+/);
         settings.handbookYear = $("#settings-handbook-year").val();
 
         settings.options = {
