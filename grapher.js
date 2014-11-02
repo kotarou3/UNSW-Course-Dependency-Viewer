@@ -693,15 +693,27 @@ function redrawGraph(handbookYear, courses, completedCourses, options) {
         }, {});
 
         var graphData = {};
-        for (var c = 0; c < courses.length; ++c)
-            if (handbook[courses[c]])
-                addLinkedCourses(graphData, handbook, courses[c], completedCourses, options);
+        for (var c = 0; c < courses.length; ++c) {
+            var code = courses[c];
+            if (handbook[code])
+                addLinkedCourses(graphData, handbook, code, completedCourses, options);
+            else
+                graphData[code] = {id: code, type: "course", code: code, data: {}};
+        }
 
         var $svg = generateGraph(graphData, completedCourses, options);
 
-        for (var c = 0; c < courses.length; ++c)
-            if (handbook[courses[c]])
-                $svg[0].getElementById(JSON.stringify(handbook[courses[c]].id)).classList.add("chosen");
+        for (var c = 0; c < courses.length; ++c) {
+            var code = courses[c];
+            var node = $svg[0].getElementById(JSON.stringify((handbook[code] || {id: code}).id));
+            node.classList.add("chosen");
+
+            // Prevent non-existent courses from being selected or searched for
+            if (!handbook[code]) {
+                d3.select(node).datum(null);
+                delete graphData[code];
+            }
+        }
 
         var $viewport = $("#output");
         $viewport.empty().append($svg);
