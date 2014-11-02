@@ -60,6 +60,8 @@ body {
   opacity: 0.5; }
   #search:hover, #search.active {
     opacity: 0.95; }
+  #search #help {
+    font-weight: bold; }
   #search #search-result {
     display: none; }
   #search #data {
