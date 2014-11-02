@@ -16,7 +16,7 @@
 "use strict";
 
 var handbookCache = {};
-function getHandbook(year) {
+function getHandbook(year, progressCallback) {
     var handbook;
     if (handbookCache[year])
         handbook = Promise.resolve(handbookCache[year]);
@@ -25,9 +25,13 @@ function getHandbook(year) {
             var xhr = new XMLHttpRequest();
 
             xhr.open("GET", "data/" + year + ".json", true);
+            xhr.onprogress = function (e) {
+                if (progressCallback)
+                    progressCallback(e.loaded, e.total);
+            };
             xhr.onload = function () {
                 resolve(this.responseText);
-            }
+            };
             xhr.send();
         }).tap(function (courses) {
             handbookCache[year] = courses;
@@ -686,12 +690,36 @@ function redrawGraph(handbookYear, courses, completedCourses, options) {
         options = settings.options || {};
     }
 
-    return getHandbook(handbookYear).then(function (handbook) {
-        completedCourses = completedCourses.reduce(function (completedCourses, code) {
-            completedCourses[code] = 1;
-            return completedCourses;
-        }, {});
+    completedCourses = completedCourses.reduce(function (completedCourses, code) {
+        completedCourses[code] = 1;
+        return completedCourses;
+    }, {});
 
+    var $progressTitle = $("#progress-modal .modal-title");
+    var $progressBar = $("#progress-modal .progress-bar");
+
+    $progressTitle.text("Downloading Handbook");
+    return new Promise(function (resolve, reject) {
+        $("#progress-modal").modal("show").on("shown.bs.modal", resolve);
+    }).then(function () {
+        return getHandbook(handbookYear, function (loaded, total) {
+            loaded /= 1000;
+            total /= 1000;
+
+            $progressTitle.text("Downloading Handbook (" + Math.round(loaded) + " KB of " + (total ? Math.round(total) : "???") + " KB)");
+            if (total) {
+                $progressBar.removeClass("progress-bar-striped active");
+                $progressBar.css("width", (loaded / total * 100) + "%");
+            } else {
+                $progressBar.addClass("progress-bar-striped active");
+                $progressBar.css("width", "100%");
+            }
+        });
+    }).tap(function () {
+        $progressTitle.text("Building Graph");
+        $progressBar.addClass("progress-bar-striped active");
+        $progressBar.css("width", "100%");
+    }).delay(200).then(function (handbook) {
         var graphData = {};
         for (var c = 0; c < courses.length; ++c) {
             var code = courses[c];
@@ -721,6 +749,8 @@ function redrawGraph(handbookYear, courses, completedCourses, options) {
         setupZooming($viewport);
         setupSelecting($svg, showCourseToolbox);
         setupSearching(graphData);
+
+        $("#progress-modal").modal("hide");
 
         return $svg;
     });
