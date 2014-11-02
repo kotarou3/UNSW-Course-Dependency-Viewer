@@ -366,12 +366,12 @@ function setupSelecting($svg, callback) {
 
     function highlightChain(nodeElem, node, className, isOn) {
         nodeElem.classList[isOn ? "add" : "remove"](className);
-        if (edgesBySource[node.id]) {
+        if (node && edgesBySource[node.id]) {
             edgesBySource[node.id].classed(className, isOn);
             edgesBySource[node.id].each(function (edge) {
                 var targetElem = $svg[0].getElementById(JSON.stringify(edge.target));
                 var target = d3.select(targetElem).datum();
-                if (target.type !== "course")
+                if (target && target.type !== "course")
                     highlightChain(targetElem, target, className, isOn);
                 else
                     targetElem.classList[isOn ? "add" : "remove"](className);
@@ -412,7 +412,7 @@ function setupSelecting($svg, callback) {
 
         var targetElem = $svg[0].getElementById(JSON.stringify(edge.target))
         var target = d3.select(targetElem).datum();
-        if (target.type !== "course")
+        if (target && target.type !== "course")
             highlightChain(targetElem, target, "highlighted", true);
     });
     edges.on("mouseout", function (edge) {
@@ -421,7 +421,7 @@ function setupSelecting($svg, callback) {
 
         var targetElem = $svg[0].getElementById(JSON.stringify(edge.target))
         var target = d3.select(targetElem).datum();
-        if (target.type !== "course")
+        if (target && target.type !== "course")
             highlightChain(targetElem, target, "highlighted", false);
     });
     edges.on("click", function (edge) {
