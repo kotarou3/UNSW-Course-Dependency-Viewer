@@ -643,8 +643,8 @@ function showCourseToolbox(course) {
 
         $("#requirements-error").text("").hide().removeClass("in");
         function saveRequirements() {
-            var prerequisiteCourses = $("#prerequisite-courses").val();
-            var corequisiteCourses = $("#corequisite-courses").val();
+            var prerequisiteCourses = $("#prerequisite-courses").val().toUpperCase();
+            var corequisiteCourses = $("#corequisite-courses").val().toUpperCase();
             try {
                 if (prerequisiteCourses)
                     prerequisiteCourses = parseLogicExpression(prerequisiteCourses);
