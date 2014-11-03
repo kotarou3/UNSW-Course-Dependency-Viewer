@@ -33,6 +33,9 @@ function getHandbook(year, progressCallback) {
                 resolve(this.responseText);
             };
             xhr.send();
+
+            if (progressCallback)
+                progressCallback(0, 0);
         }).tap(function (courses) {
             handbookCache[year] = courses;
         });
@@ -698,15 +701,16 @@ function redrawGraph(handbookYear, courses, completedCourses, options) {
     var $progressTitle = $("#progress-modal .modal-title");
     var $progressBar = $("#progress-modal .progress-bar");
 
-    $progressTitle.text("Downloading Handbook");
-    return new Promise(function (resolve, reject) {
-        $("#progress-modal").modal("show").on("shown.bs.modal", resolve);
-    }).then(function () {
-        return getHandbook(handbookYear, function (loaded, total) {
+    return Promise.all([
+        getHandbook(handbookYear, function (loaded, total) {
             loaded /= 1000;
             total /= 1000;
 
-            $progressTitle.text("Downloading Handbook (" + Math.round(loaded) + " KB of " + (total ? Math.round(total) : "???") + " KB)");
+            if (!loaded && !total)
+                $progressTitle.text("Downloading Handbook");
+            else
+                $progressTitle.text("Downloading Handbook (" + Math.round(loaded) + " KB " + (total ? "of " + Math.round(total) + " KB" : "downloaded") + ")");
+
             if (total) {
                 $progressBar.removeClass("progress-bar-striped active");
                 $progressBar.css("width", (loaded / total * 100) + "%");
@@ -714,12 +718,15 @@ function redrawGraph(handbookYear, courses, completedCourses, options) {
                 $progressBar.addClass("progress-bar-striped active");
                 $progressBar.css("width", "100%");
             }
-        });
-    }).tap(function () {
+        }),
+        new Promise(function (resolve, reject) {
+            $("#progress-modal").modal("show").on("shown.bs.modal", resolve);
+        })
+    ]).tap(function () {
         $progressTitle.text("Building Graph");
         $progressBar.addClass("progress-bar-striped active");
         $progressBar.css("width", "100%");
-    }).delay(200).then(function (handbook) {
+    }).delay(200).spread(function (handbook) {
         var graphData = {};
         for (var c = 0; c < courses.length; ++c) {
             var code = courses[c];
