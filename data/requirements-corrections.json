@@ -1,0 +1,851 @@
+{
+    "Prerequisite: stage two of a CSE program.": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: A mark of 75 in COMP1911 and completion of the bridging course, or COMP1921, or COMP1917.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "COMP1911"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMP1921"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMP1917"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite:  Enrolment in a non-CSE program.": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: MATH1231 or MATH1241 or MATH1251 each with a mark of at least 70; Excluded: MATH2019, MATH2049, MATH2069, MATH2100, MATH2110.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "MATH1231"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MATH1241"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MATH1251"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: MATH1231 or MATH1241 or MATH1251 each with a mark of 70.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "MATH1231"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MATH1241"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MATH1251"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: MATH1131 CR or MATH1141 CR.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "MATH1131"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MATH1141"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: PHYS1131 or PHYS1141 or a mark of 65 or above in PHYS1121; Corequisite: MATH1231 or MATH1241": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "PHYS1131"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "PHYS1141"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "PHYS1121"
+                }
+            ]
+        },
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "MATH1231"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MATH1241"
+                }
+            ]
+        }
+    },
+    "Prerequisite: PHYS1221 or PHYS1231 or PHYS1241, and, MATH1231 or MATH1241; Exclusion: PHYS2030, PHYS2040": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1221"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1231"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1241"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "MATH1231"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "MATH1241"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: PHYS1221 or PHYS1231 or PHYS1241, and, MATH2011 or MATH2111;  Exclusion: PHYS2050, PHYS2060": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1221"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1231"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1241"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "MATH2011"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "MATH2111"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: PHYS1002 or PHYS1221 or PHYS1231 or PHYS1241 and MATH1231 or MATH1241; Exclusion: PHYS2110": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1002"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1221"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1231"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1241"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "MATH1231"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "MATH1241"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: PHYS1002 or PHYS1221 or PHYS1231 or PHYS1241,  MATH1231 or MATH1241; Corequisite: MATH2011 or MATH2110 or MATH2100; Exclusion: PHYS2210": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1002"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1221"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1231"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1241"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "MATH1231"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "MATH1241"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "MATH2011"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MATH2110"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MATH2100"
+                }
+            ]
+        }
+    },
+    "Prerequisite: PHYS1002 or PHYS1022  or PHYS1111 or PHYS1221 or PHYS1231 or PHYS1241,  MATH1021 or MATH1131 or MATH1141 or MATH1031; Exclusion: PHYS2210": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1002"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1022"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1111"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1221"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1231"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS1241"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "MATH1021"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "MATH1131"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "MATH1141"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "MATH1031"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: COMP3931 or [65 in COMP3331 or TELE3018].": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "COMP3931"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMP3331"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "TELE3018"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: COMP1927 or, a mark of 70 in COMP1921.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "COMP1927"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMP1921"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: a mark of at least 70 in COMP1921 or COMP1927, and a mark of at least 70 in COMP2121 or  ELEC2142.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "COMP1921"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "COMP1927"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "COMP2121"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "ELEC2142"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: ELEC2141and COMP1921": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "ELEC2141"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMP1921"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre-Requisite: elec1111 or elec1112": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "ELEC1111"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ELEC1112"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: [COMP1927 or a mark of at least 70 in COMP1921] and  [COMP2121 or  ELEC2142].": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "COMP1927"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "COMP1921"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "COMP2121"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "ELEC2142"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre-requisites: Commercial Law (LAWS3018/JURD7318) and Business Associations (LAWS1091/LAWS2010/JURD7224). Co-requisite: Resolving Civil Disputes (LAWS2371/JURD7271) OR Litigation 1 (LAWS2311/JURD7211).": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "LAWS3018"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "JURD7318"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "LAWS1091"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "LAWS2010"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "JURD7224"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "LAWS2371"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7271"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "LAWS2311"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7211"
+                }
+            ]
+        }
+    },
+    "Pre-requisite: LAWS1075 or JURD7175 (Contracts);  Pre-requisite: LAWS1072 or JURD7172": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "LAWS1075"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7175"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "LAWS1072"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7172"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre-requisite: Principles of Private Law (any one of LAWS1071, LAWS1150, JURD7150, or JURD7171)": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "LAWS1071"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "LAWS1150"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7150"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7171"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre-requisite: LAWS2385 or JURD7285  Pre-requisite: LAWS2381 or JURD7281": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "LAWS2385"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7285"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "LAWS2381"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7281"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre-requisite: Land Law (LAWS2383/JURD7283) OR Property, Equity & Trusts 2 (LAWS2382/JURD7282). Co-requisite: Business Associations (any of LAWS1091, LAWS2010 or JURD7224).": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "LAWS2383"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7283"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "LAWS2382"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7282"
+                }
+            ]
+        },
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "LAWS1091"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "LAWS2010"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7224"
+                }
+            ]
+        }
+    },
+    "Pre-requisite: LAWS1075 or JURD7175  Pre-requisite: LAWS1072 or JURD7172": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "LAWS1075"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7175"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "LAWS1072"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7172"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Currently enrolled in a program in the Faculty of Law.": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: a mark of at least 75 in COMP3231 or COMP3891.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "COMP3231"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMP3891"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: Must not be enrolled in Program 4733, 4737, 4744": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": ""
+    },
+    "Excluded: MATH2841, MATH2801, MATH2901, MATH2099 & ACTL2002   Prerequisite: Must not be enrolled in Program 3715 or 3764": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": ""
+    },
+    "Pre-requisite: Crime & Criminal Process (LAWS1021/JURD7121) & Criminal Laws (LAWS1022/JURD7122) OR Crim. Law 1 (LAWS1001/JURD7101) & Crim. Law 2 (LAWS1011/JURD7111). Co-requisite: Litigation 1 [LAWS2311/ JURD7211] OR Res. Civil Disp. (LAWS2371/JURD7271)": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "LogicalExpression",
+                            "operator": "||",
+                            "children": [
+                                {
+                                    "type": "Identifier",
+                                    "name": "LAWS1021"
+                                },
+                                {
+                                    "type": "Identifier",
+                                    "name": "JURD7121"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "LogicalExpression",
+                            "operator": "||",
+                            "children": [
+                                {
+                                    "type": "Identifier",
+                                    "name": "LAWS1022"
+                                },
+                                {
+                                    "type": "Identifier",
+                                    "name": "JURD7122"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "LogicalExpression",
+                            "operator": "||",
+                            "children": [
+                                {
+                                    "type": "Identifier",
+                                    "name": "LAWS1001"
+                                },
+                                {
+                                    "type": "Identifier",
+                                    "name": "JURD7101"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "LogicalExpression",
+                            "operator": "||",
+                            "children": [
+                                {
+                                    "type": "Identifier",
+                                    "name": "LAWS1011"
+                                },
+                                {
+                                    "type": "Identifier",
+                                    "name": "JURD7111"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "LAWS2311"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7211"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "LAWS2371"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7271"
+                }
+            ]
+        }
+    }
+}

@@ -15,41 +15,57 @@
 
 "use strict";
 
+function downloadFile(uri, progressCallback) {
+    return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("GET", uri, true);
+        xhr.onprogress = function (e) {
+            if (progressCallback)
+                progressCallback(e.loaded, e.total);
+        };
+        xhr.onload = function () {
+            resolve(this.responseText);
+        };
+        xhr.send();
+
+        if (progressCallback)
+            progressCallback(0, 0);
+    });
+}
+
+var requirementsCorrectionsCache;
 var handbookCache = {};
 function getHandbook(year, progressCallback) {
-    var handbook;
-    if (handbookCache[year])
-        handbook = Promise.resolve(handbookCache[year]);
+    var requirementsCorrections;
+    if (requirementsCorrectionsCache)
+        requirementsCorrections = Promise.resolve(requirementsCorrectionsCache)
     else
-        handbook = new Promise(function (resolve, reject) {
-            var xhr = new XMLHttpRequest();
-
-            xhr.open("GET", "data/" + year + ".json", true);
-            xhr.onprogress = function (e) {
-                if (progressCallback)
-                    progressCallback(e.loaded, e.total);
-            };
-            xhr.onload = function () {
-                resolve(this.responseText);
-            };
-            xhr.send();
-
-            if (progressCallback)
-                progressCallback(0, 0);
-        }).tap(function (courses) {
-            handbookCache[year] = courses;
+        requirementsCorrections = downloadFile("data/requirements-corrections.json", progressCallback).tap(function (requirementsCorrections) {
+            requirementsCorrectionsCache = requirementsCorrections;
         });
 
-    return handbook.then(function (courses) {
+    return requirementsCorrections.then(function () {
+        var handbook;
+        if (handbookCache[year])
+            handbook = Promise.resolve(handbookCache[year]);
+        else
+            handbook = downloadFile("data/" + year + ".json", progressCallback).tap(function (courses) {
+                handbookCache[year] = courses;
+            });
+
+        return handbook;
+    }).then(function (courses) {
         courses = JSON.parse(courses);
-        var requirementsCorrections = JSON.parse(localStorage.getItem("requirementsCorrections")) || {};
+        var requirementsCorrections = JSON.parse(requirementsCorrectionsCache);
+        var localRequirementsCorrections = JSON.parse(localStorage.getItem("requirementsCorrections")) || {};
 
         for (var c in courses) {
             courses[c].id = c;
             courses[c].type = "course";
 
-            if (courses[c].data && requirementsCorrections[courses[c].data.requirements]) {
-                var corrections = requirementsCorrections[courses[c].data.requirements];
+            var corrections = courses[c].data ? localRequirementsCorrections[courses[c].data.requirements] || requirementsCorrections[courses[c].data.requirements] : null;
+            if (corrections) {
                 for (var key in corrections)
                     courses[c].data[key] = corrections[key];
                 delete courses[c].data.isParsingRequirementsFailed;
