@@ -508,65 +508,6 @@ function setupSettings() {
     $("#save-settings").one("click", saveSettings);
 }
 
-function parseLogicExpression(expression) {
-    var tree = jsep(expression);
-
-    var stack = [tree];
-    while (stack.length > 0) {
-        var node = stack.pop();
-
-        if (node.type === "Literal") {
-            node.type = "Identifier";
-            node.name = node.raw;
-        } else if (node.type === "LogicalExpression") {
-            node.children = [node.left, node.right];
-            delete node.left;
-            delete node.right;
-
-            // Flatten any chains (e.g., (A && B) && C -> A && B && C)
-            for (var c = 0; c < node.children.length; ++c)
-                if (node.operator === node.children[c].operator) {
-                    node.children.splice(c, 1, node.children[c].left, node.children[c].right);
-                    --c;
-                }
-
-            Array.prototype.push.apply(stack, node.children);
-        } else if (node.type !== "Identifier")
-            throw new Error("Unexpected " + node.type);
-    }
-
-    return tree;
-}
-function logicTreeToString(tree) {
-    if (!tree)
-        return "";
-    if (tree.type === "Identifier")
-        return tree.name;
-
-    tree = JSON.parse(JSON.stringify(tree));
-    var stack = [tree];
-    while (stack.length > 0) {
-        var node = stack[stack.length - 1];
-
-        var areChildrenReady = true;
-        for (var c = 0; c < node.children.length; ++c)
-            if (node.children[c].type !== "Identifier") {
-                areChildrenReady = false;
-                stack.push(node.children[c]);
-            }
-        if (!areChildrenReady)
-            continue;
-
-        node.type = "Identifier";
-        node.name = node.children.map(function (child) { return child.name; }).join(" " + node.operator + " ");
-        if (node !== tree)
-            node.name = "(" + node.name + ")";
-
-        stack.pop();
-    }
-
-    return tree.name;
-}
 function showCourseToolbox(course) {
     var dataKeyMap = { // const
         code: "Code",

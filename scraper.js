@@ -38,132 +38,6 @@ function downloadHandbook(year) {
     }, {});
 }
 
-function parseLogicExpression(expression) {
-    let tree = require("jsep")(expression);
-
-    let stack = [tree];
-    while (stack.length > 0) {
-        let node = stack.pop();
-
-        if (node.type === "Literal") {
-            node.type = "Identifier";
-            node.name = node.raw;
-        } else if (node.left && node.right) {
-            node.children = [node.left, node.right];
-            delete node.left;
-            delete node.right;
-
-            // Flatten any chains (e.g., (A && B) && C -> A && B && C)
-            for (let c = 0; c < node.children.length; ++c)
-                if (node.operator === node.children[c].operator) {
-                    node.children.splice(c, 1, node.children[c].left, node.children[c].right);
-                    --c;
-                }
-
-            Array.prototype.push.apply(stack, node.children);
-        }
-    }
-
-    return tree;
-}
-function logicTreeToString(tree) {
-    if (!tree)
-        return "";
-    if (tree.type === "Identifier")
-        return tree.name;
-
-    tree = JSON.parse(JSON.stringify(tree));
-    let stack = [tree];
-    while (stack.length > 0) {
-        let node = stack[stack.length - 1];
-
-        let areChildrenReady = true;
-        for (let c = 0; c < node.children.length; ++c)
-            if (node.children[c].type !== "Identifier") {
-                areChildrenReady = false;
-                stack.push(node.children[c]);
-            }
-        if (!areChildrenReady)
-            continue;
-
-        node.type = "Identifier";
-        node.name = node.children.map(function (child) { return child.name; }).join(" " + node.operator + " ");
-        if (node !== tree)
-            node.name = "(" + node.name + ")";
-
-        stack.pop();
-    }
-
-    return tree.name;
-}
-function parseHumanReadableList(list, defaultConditional, elementRegex) {
-    let isFailed = false;
-    let parts = (" " + list + " ")
-        .replace(/\s+/g, " ")
-        .replace(/[.,]+/g, " ")
-        .replace(/[\[{]/g, "(")
-        .replace(/[\]}]/g, ")")
-        .replace(/([()])/g, " $1 ")
-        .replace(/ ([^ ]+)\/([^ ]+)/g, " ( $1 or $2 ) ")
-        .split(" ");
-    let parsedParts = [];
-    let lastConditional = defaultConditional;
-    for (let p = parts.length - 1; p >= 0; --p) {
-        let part = parts[p].trim();
-        if (!part)
-            continue;
-
-        if (part.toLowerCase() === "and") {
-            lastConditional = "&&";
-            parsedParts.unshift("&&");
-            continue;
-        }
-        if (part.toLowerCase() === "or") {
-            lastConditional = "||";
-            parsedParts.unshift("||");
-            continue;
-        }
-
-        if (part === ")") {
-            if (parsedParts.length > 0 && (parsedParts[0].match(elementRegex) || parsedParts[0] === "("))
-                parsedParts.unshift(lastConditional);
-            parsedParts.unshift(")");
-            continue;
-        }
-        if (part === "(") {
-            parsedParts.unshift("(");
-            continue;
-        }
-
-        if (!part.match(elementRegex)) {
-            isFailed = true;
-        } else {
-            if (parsedParts.length > 0 && (parsedParts[0].match(elementRegex) || parsedParts[0] === "("))
-                parsedParts.unshift(lastConditional);
-            parsedParts.unshift(part);
-        }
-    }
-
-    let parsedList = parsedParts.join("");
-    let parsedList2;
-    while (true) {
-        parsedList2 = parsedList.replace(/\(\)/g, "").replace(/(^|\()([&|]{2})+/g, "$1").replace(/([&|]{2})+($|\))/g, "$2").replace(/([&|]{2})([&|]{2})+/g, "$1");
-        if (parsedList2 === parsedList)
-            break;
-
-        isFailed = true;
-        parsedList = parsedList2;
-    }
-
-    try {
-        return {
-            list: parsedList ? parseLogicExpression(parsedList) : null,
-            isFailed: isFailed
-        };
-    } catch (e) {
-        return {list: null, isFailed: true};
-    }
-}
 function parseHandbook(pages) {
     let libxml = require("libxmljs");
 
@@ -224,6 +98,8 @@ function parseHandbook(pages) {
     };
     const dataParsers = {
         requirements: function (data, requirements) {
+            let logicExpressionParser = require("./logic-expression-parser.js");
+
             if (requirements.toLowerCase().trim() === "none")
                 return;
 
@@ -262,13 +138,13 @@ function parseHandbook(pages) {
                     continue;
                 }
 
-                let result = parseHumanReadableList(value, "&&", /^([A-Z]{4})?[0-9]{4}$/);
-                if (result.isFailed || logicTreeToString(result.list).match(/[\b(][0-9]{4}[\b)]/))
+                let result = logicExpressionParser.parseHumanReadableList(value, "&&", /^([A-Z]{4})?[0-9]{4}$/);
+                if (result.isFailed || logicExpressionParser.logicTreeToString(result.list).match(/[\b(][0-9]{4}[\b)]/))
                     isParsingFailed = true;
 
                 value = result.list;
                 if (data[key] && !dataMergers[key]) {
-                    console.warn("Data \"" + key + "\" already exists as \"" + logicTreeToString(data[key]) + "\" when \"" + logicTreeToString(value) + "\" was parsed from requirements:", requirements);
+                    console.warn("Data \"" + key + "\" already exists as \"" + logicExpressionParser.logicTreeToString(data[key]) + "\" when \"" + logicExpressionParser.logicTreeToString(value) + "\" was parsed from requirements:", requirements);
                     isParsingFailed = true;
                 } else {
                     value = dataParsers[key] ? dataParsers[key](data, value) : value;
