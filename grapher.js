@@ -164,6 +164,10 @@ function convertToNodesAndEdges(courses, completedCourses, options) {
         if (cache[id])
             return cache[id];
 
+        if (children.length > 20)
+            // No more than 2^20 iterations
+            return children;
+
         var results = [children];
         for (var c = 0; c < children.length; ++c) {
             var newChildren = children.slice(0);
