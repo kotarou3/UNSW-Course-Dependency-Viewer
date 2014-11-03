@@ -666,7 +666,7 @@ function redrawGraph(handbookYear, courses, completedCourses, options) {
             if (!loaded && !total)
                 $progressTitle.text("Downloading Handbook");
             else
-                $progressTitle.text("Downloading Handbook (" + Math.round(loaded) + " KB " + (total ? "of " + Math.round(total) + " KB" : "downloaded") + ")");
+                $progressTitle.text("Downloading Handbook (" + Math.round(loaded) + " KB " + (total ? "of " + Math.round(total) + " KB" : "received") + ")");
 
             if (total) {
                 $progressBar.removeClass("progress-bar-striped active");
