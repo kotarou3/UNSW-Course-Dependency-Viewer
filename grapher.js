@@ -649,7 +649,7 @@ function showCourseToolbox(course) {
                 if (prerequisiteCourses)
                     prerequisiteCourses = parseLogicExpression(prerequisiteCourses);
                 if (corequisiteCourses)
-                    corequisiteCourses = parseLogicExpression($("#corequisite-courses").val());
+                    corequisiteCourses = parseLogicExpression(corequisiteCourses);
             } catch (e) {
                 $("#requirements-error").text(e.message).show().addClass("in");
                 $("#save-requirements").one("click", saveRequirements);
