@@ -101,6 +101,8 @@ function parseHumanReadableList(list, defaultConditional, elementRegex) {
     let parts = (" " + list + " ")
         .replace(/\s+/g, " ")
         .replace(/[.,]+/g, " ")
+        .replace(/[\[{]/g, "(")
+        .replace(/[\]}]/g, ")")
         .replace(/([()])/g, " $1 ")
         .replace(/ ([^ ]+)\/([^ ]+)/g, " ( $1 or $2 ) ")
         .split(" ");
