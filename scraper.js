@@ -100,16 +100,14 @@ function parseHandbook(pages) {
         requirements: function (data, requirements) {
             let logicExpressionParser = require("./logic-expression-parser.js");
 
-            if (requirements.toLowerCase().trim() === "none")
-                return;
-
-            data.isParsingRequirementsFailed = true;
-            if (!requirements.match(/\b[A-Z]{4}[0-9]{4},?\b/))
+            if (!requirements.match(/[A-Z]{4}[0-9]{4}/i))
                 return requirements;
 
             let parts = requirements.split(":").map(function (part) { return part.trim(); });
-            if (parts.length < 2)
+            if (parts.length < 2) {
+                data.isParsingRequirementsFailed = true;
                 return requirements;
+            }
 
             let isParsingFailed = false;
             let sections = [{key: parts.shift(), value: parts.shift()}];
@@ -138,8 +136,12 @@ function parseHandbook(pages) {
                     continue;
                 }
 
-                let result = logicExpressionParser.parseHumanReadableList(value, "&&", /^([A-Z]{4})?[0-9]{4}$/);
-                if (result.isFailed || logicExpressionParser.logicTreeToString(result.list).match(/[\b(][0-9]{4}[\b)]/))
+                value = value.toUpperCase().replace(/\b([A-Z]{4})\s+([0-9]{4})\b/g, "$1$2");
+                if (!value.match(/[A-Z]{4}[0-9]{4}/))
+                    continue;
+
+                let result = logicExpressionParser.parseHumanReadableList(value, "&&", /^[A-Z]{4}[0-9]{4}$/);
+                if (result.isFailed)
                     isParsingFailed = true;
 
                 value = result.list;
@@ -152,8 +154,8 @@ function parseHandbook(pages) {
                 }
             }
 
-            if (!isParsingFailed)
-                delete data.isParsingRequirementsFailed;
+            if (isParsingFailed)
+                data.isParsingRequirementsFailed = true;
             return requirements;
         },
         equivalentCourses: function (data, value) {
