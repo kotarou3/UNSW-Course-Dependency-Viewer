@@ -518,7 +518,7 @@ function setupSearching(courses) {
     var $searchBox = $("#search-query input");
     setupSearching.searchFunction = function () {
         var courses = setupSearching.courses;
-        var query = $searchBox.val();
+        var query = $searchBox.val().toUpperCase();
         if (courses[query]) {
             var result = courses[query];
 
