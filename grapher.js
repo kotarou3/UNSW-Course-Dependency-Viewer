@@ -94,7 +94,14 @@ function addRequirementsCorrection(requirements, prerequisiteCourses, corequisit
 }
 
 function findNodesAndEdges(handbook, courses, options) {
-    var coursesToAdd = (courses.root || []).slice(0);
+    var rootCourses = (courses.root || []).reduce(function (rootCourses, code) {
+        rootCourses[code] = 1;
+        return rootCourses;
+    }, {});
+    var chosenCourses = (courses.chosen || []).reduce(function (chosenCourses, code) {
+        chosenCourses[code] = 1;
+        return chosenCourses;
+    }, {});
     var completedCourses = (courses.completed || []).reduce(function (completedCourses, code) {
         completedCourses[code] = 1;
         return completedCourses;
@@ -103,11 +110,11 @@ function findNodesAndEdges(handbook, courses, options) {
     options = options || {};
 
     var addedCourses = {};
+    var fakeCourses = {};
     var nodes = [];
     var edges = [];
 
-    var fakeCourses = {};
-    function addLinkToCourse(source, target, type) {
+    function addEdge(source, target, type) {
         var course = handbook[target] || fakeCourses[target];
         if (!course) {
             if (options.hideUnknownCourses)
@@ -121,7 +128,7 @@ function findNodesAndEdges(handbook, courses, options) {
         if (handbook[target])
             coursesToAdd.push(target);
 
-        edges.push({source: source, target: course, type: type});
+        edges.push({id: type + "-" + source.id + "-" + course.id, source: source, target: course, type: type});
     }
     function simplifyOperatorChildren(children, operator, type, cache) {
         if (!cache)
@@ -147,6 +154,7 @@ function findNodesAndEdges(handbook, courses, options) {
         return cache[id] = results.sort(function (a, b) { return a.length - b.length; })[0];
     }
 
+    var coursesToAdd = Object.keys(rootCourses);
     for (var a = 0; a < coursesToAdd.length; ++a) {
         var code = coursesToAdd[a];
 
@@ -166,9 +174,9 @@ function findNodesAndEdges(handbook, courses, options) {
             continue;
 
         if (course.data.equivalentCourses && !options.hideEquivalentCourses)
-            course.data.equivalentCourses.forEach(function (codeB) { addLinkToCourse(course, codeB, "equivalent"); });
+            course.data.equivalentCourses.forEach(function (codeB) { addEdge(course, codeB, "equivalent"); });
         if (course.data.excludedCourses && !options.hideExcludedCourses)
-            course.data.excludedCourses.forEach(function (codeB) { addLinkToCourse(course, codeB, "excluded"); });
+            course.data.excludedCourses.forEach(function (codeB) { addEdge(course, codeB, "excluded"); });
 
         if (!course.data.isParsingRequirementsFailed) {
             var stack = [];
@@ -194,13 +202,21 @@ function findNodesAndEdges(handbook, courses, options) {
                     if (node.children[c].type !== "Identifier") {
                         areChildrenReady = false;
                         stack.push({node: node.children[c], type: type});
-                    } else if (areChildrenReady && node.operator === "||" && completedCourses[node.children[c].name]) {
-                        node.children = [node.children[c]];
-                        break;
                     }
                 if (!areChildrenReady)
                     continue;
                 stack.pop();
+
+                var trueChildren = [];
+                for (var c = 0; c < node.children.length; ++c)
+                    if (node.children[c].isTrue || chosenCourses[node.children[c].name] || completedCourses[node.children[c].name])
+                        trueChildren.push(node.children[c]);
+                if (node.operator === "||" && trueChildren.length > 0) {
+                    node.isTrue = true;
+                    node.children = [trueChildren[0]];
+                } else if (node.operator === "&&" && trueChildren.length === node.children.length) {
+                    node.isTrue = true;
+                }
 
                 var children = node.children.map(function (child) { return child.name; }).sort();
                 if (options.hideUnknownCourses)
@@ -215,18 +231,62 @@ function findNodesAndEdges(handbook, courses, options) {
                     nodes.push(operatorNode);
 
                     for (var c = 0; c < simplifiedChildren.length; ++c)
-                        addLinkToCourse(operatorNode, simplifiedChildren[c], type);
+                        addEdge(operatorNode, simplifiedChildren[c], type);
                 }
 
                 node.type = "Identifier";
                 node.name = children.length === 1 ? children[0] : operatorNodeId;
             }
             if (prerequisiteCourses)
-                addLinkToCourse(course, prerequisiteCourses.name, "prerequisite");
+                addEdge(course, prerequisiteCourses.name, "prerequisite");
             if (corequisiteCourses)
-                addLinkToCourse(course, corequisiteCourses.name, "corequisite");
+                addEdge(course, corequisiteCourses.name, "corequisite");
         }
     }
+
+    // Prune orphaned nodes
+    var edgesBySource = {};
+    var parentCount = {};
+    for (var e = 0; e < edges.length; ++e) {
+        var source = edges[e].source.id;
+        var target = edges[e].target.id;
+
+        if (!edgesBySource[source])
+            edgesBySource[source] = [];
+        edgesBySource[source].push(edges[e]);
+
+        if (!parentCount[target])
+            parentCount[target] = 0;
+        ++parentCount[target];
+    }
+
+    var nodesToCheck = nodes.slice(0);
+    var nodesToRemove = {};
+    var edgesToRemove = {};
+    while (nodesToCheck.length > 0) {
+        var node = nodesToCheck.pop();
+        if (rootCourses[node.code] || parentCount[node.id])
+            continue;
+
+        nodesToRemove[node.id] = 1;
+        var edgesFromNode = edgesBySource[node.id] || [];
+        for (var e = 0; e < edgesFromNode.length; ++e) {
+            edgesToRemove[edgesFromNode[e].id] = 1;
+            if (!--parentCount[edgesFromNode[e].target.id])
+                nodesToCheck.push(edgesFromNode[e].target);
+        }
+    }
+
+    var oldNodes = nodes;
+    var oldEdges = edges;
+    nodes = [];
+    edges = [];
+    for (var n = 0; n < oldNodes.length; ++n)
+        if (!nodesToRemove[oldNodes[n].id])
+            nodes.push(oldNodes[n]);
+    for (var e = 0; e < oldEdges.length; ++e)
+        if (!edgesToRemove[oldEdges[e].id])
+            edges.push(oldEdges[e]);
 
     return {nodes: nodes, edges: edges, addedCourses: Object.keys(addedCourses)};
 }
@@ -476,6 +536,7 @@ function setupSettings() {
     var settings = JSON.parse(localStorage.getItem("settings")) || {};
 
     $("#settings-root-courses").val((settings.rootCourses || []).join(" "));
+    $("#settings-chosen-courses").val((settings.chosenCourses || []).join(" "));
     $("#settings-completed-courses").val((settings.completedCourses || []).join(" "));
     if (settings.handbookYear)
         $("#settings-handbook-year").val(settings.handbookYear);
@@ -491,6 +552,7 @@ function setupSettings() {
 
     function saveSettings() {
         settings.rootCourses = $("#settings-root-courses").val().toUpperCase().split(/[ ,]+/);
+        settings.chosenCourses = $("#settings-chosen-courses").val().toUpperCase().split(/[ ,]+/);
         settings.completedCourses = $("#settings-completed-courses").val().toUpperCase().split(/[ ,]+/);
         settings.handbookYear = $("#settings-handbook-year").val();
 
@@ -614,6 +676,42 @@ function showCourseToolbox(course) {
         $("#save-requirements").off("click").one("click", saveRequirements);
     });
 
+    $("#toggle-choice").off("click").on("click", function () {
+        var settings = JSON.parse(localStorage.getItem("settings")) || {};
+        var chosenCourses = settings.chosenCourses;
+        if (!chosenCourses)
+            chosenCourses = settings.chosenCourses = [];
+
+        var codeIndex = chosenCourses.indexOf(course.code);
+        if (codeIndex >= 0)
+            chosenCourses.splice(codeIndex, 1);
+        else
+            chosenCourses.push(course.code);
+
+        localStorage.setItem("settings", JSON.stringify(settings));
+        redrawGraph().then(function () {
+            $("#centre-on-graph").click();
+        }).done();
+    });
+
+    $("#toggle-completion").off("click").on("click", function () {
+        var settings = JSON.parse(localStorage.getItem("settings")) || {};
+        var completedCourses = settings.completedCourses;
+        if (!completedCourses)
+            completedCourses = settings.completedCourses = [];
+
+        var codeIndex = completedCourses.indexOf(course.code);
+        if (codeIndex >= 0)
+            completedCourses.splice(codeIndex, 1);
+        else
+            completedCourses.push(course.code);
+
+        localStorage.setItem("settings", JSON.stringify(settings));
+        redrawGraph().then(function () {
+            $("#centre-on-graph").click();
+        }).done();
+    });
+
     $("#centre-on-graph").off("click").on("click", function () {
         var boundingBox = document.getElementById(JSON.stringify(course.id)).getBoundingClientRect();
         var x = (boundingBox.left + boundingBox.right) / 2;
@@ -635,6 +733,7 @@ function redrawGraph(handbookYear, courses, options) {
         handbookYear = settings.handbookYear;
         courses = {
             root: settings.rootCourses || [],
+            chosen: settings.chosenCourses || [],
             completed: settings.completedCourses || []
         };
         options = settings.options || {};
@@ -673,10 +772,13 @@ function redrawGraph(handbookYear, courses, options) {
         var $svg = graph.$svg;
         var addedCourses = graph.addedCourses.map(function (code) { return handbook[code]; });
 
-        for (var c = 0; c < courses.root.length; ++c) {
-            var code = courses.root[c];
-            var node = $svg[0].getElementById(JSON.stringify((handbook[code] || {id: code}).id));
-            node.classList.add("chosen");
+        for (var type in courses) {
+            for (var c = 0; c < courses[type].length; ++c) {
+                var code = courses[type][c];
+                var node = $svg[0].getElementById(JSON.stringify((handbook[code] || {id: code}).id));
+                if (node)
+                    node.classList.add(type);
+            }
         }
 
         var $viewport = $("#output");

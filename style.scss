@@ -53,12 +53,20 @@ body {
     .selected {
         @include node-edge-colour(darkgoldenrod);
     }
-    .chosen {
+
+    .root {
         @include node-edge-colour(darkgoldenrod);
         &.node polygon {
             stroke-width: 0.2em;
         }
     }
+    .chosen {
+        @include node-edge-colour(blue);
+    }
+    .completed {
+        @include node-edge-colour(green);
+    }
+
     .incomplete {
         @include node-edge-colour(red);
     }
@@ -68,7 +76,7 @@ body {
     position: absolute;
     top: 3em;
     left: 3em;
-    width: 40em;
+    width: 45em;
 
     padding: 0.5em;
     background-color: #eee;

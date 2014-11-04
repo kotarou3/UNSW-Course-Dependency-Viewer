@@ -30,6 +30,8 @@
                 <table id="data" class="table table-condensed"></table>
                 <div id="actions">
                     <a id="edit-requirements" class="btn btn-default" data-toggle="modal" data-target="#edit-requirements-modal">Edit Requirements</a>
+                    <a id="toggle-choice" class="btn btn-default">Toggle Choice</a>
+                    <a id="toggle-completion" class="btn btn-default">Toggle Completion</a>
                     <a id="centre-on-graph" class="btn btn-default">Centre on Graph</a>
                 </div>
             </div>
@@ -46,6 +48,10 @@
                             <div class="form-group">
                                 <label for="settings-root-courses" class="col-sm-3 control-label">Root Courses</label>
                                 <div class="col-sm-9"><input id="settings-root-courses" type="text" class="form-control" placeholder="Courses to draw the graph from" /></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="settings-chosen-courses" class="col-sm-3 control-label">Chosen Courses</label>
+                                <div class="col-sm-9"><input id="settings-chosen-courses" type="text" class="form-control" placeholder="Courses to prioritise for dependencies (Optional)" /></div>
                             </div>
                             <div class="form-group">
                                 <label for="settings-completed-courses" class="col-sm-3 control-label">Completed Courses</label>
