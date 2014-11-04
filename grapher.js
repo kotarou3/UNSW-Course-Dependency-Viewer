@@ -582,6 +582,7 @@ function showCourseToolbox(course) {
     var dataKeyMap = { // const
         code: "Code",
         name: "Name",
+        uri: "Handbook Link",
         description: "Description",
         faculty: "Faculty",
         school: "School",
@@ -605,7 +606,7 @@ function showCourseToolbox(course) {
         isGeneralEducation: "General Education"
     };
     var displayOrder = [ // const
-        "code", "name",
+        "code", "name", "uri",
         "faculty", "school", "campus", "career", "courseOutline",
         "unitsOfCredit", "eftsl", "hoursPerWeek",
         "requirements", "isParsingRequirementsFailed", "prerequisiteCourses", "corequisiteCourses", "excludedCourses", "equivalentCourses",
@@ -643,7 +644,11 @@ function showCourseToolbox(course) {
         var $contents = $("<td>");
 
         $heading.text(dataKeyMap[key]);
-        $contents.text(data);
+
+        if (key === "uri")
+            $contents.append($("<a>").attr({href: data, target: "_blank"}).text(data));
+        else
+            $contents.text(data);
 
         $row.append($heading).append($contents);
         $data.append($row);

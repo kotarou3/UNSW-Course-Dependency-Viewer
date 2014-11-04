@@ -22,7 +22,6 @@ function downloadHandbook(year) {
     let request = Promise.guard(3, Promise.promisify(require("request"), true));
     let libxml = require("libxmljs");
     let url = require("url");
-    let path = require("path");
 
     let coursesUrl = "http://www.handbook.unsw.edu.au/vbook" + year + "/brCoursesByAtoZ.jsp?StudyLevel=Undergraduate&descr=All";
     return request(coursesUrl).spread(function (response, body) {
@@ -32,13 +31,14 @@ function downloadHandbook(year) {
     }).reduce(function (pages, courseLink) {
         console.warn("Downloading", courseLink);
         return request(courseLink).spread(function (response, body) {
-            pages[path.basename(courseLink, ".html")] = body;
+            pages[courseLink] = body;
             return pages;
         });
     }, {});
 }
 
 function parseHandbook(pages) {
+    let path = require("path");
     let libxml = require("libxmljs");
 
     const dataKeyMap = {
@@ -222,13 +222,15 @@ function parseHandbook(pages) {
     };
 
     let courses = {};
-    for (let code in pages) {
-        let document = libxml.parseHtmlString(pages[code]);
+    for (let uri in pages) {
+        let code = path.basename(uri, ".html");
+        let document = libxml.parseHtmlString(pages[uri]);
         courses[code] = {};
 
         let name = document.get("//title").text().split("-");
         if (name[0].trim() === "UNSW Handbook Course")
             name.shift();
+        courses[code].uri = uri;
         courses[code].code = name.length > 0 && name[name.length - 1].trim().match(/^[A-Z]{4}[0-9]{4}$/) ? name.pop().trim() : code;
         courses[code].name = name.join("-").trim();
 
