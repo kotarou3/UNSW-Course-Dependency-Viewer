@@ -96,6 +96,10 @@ function parseHandbook(pages) {
         exclusions: "excludedCourses",
         excl: "excludedCourses"
     };
+    function toKey(a) {
+        return a.toLowerCase().replace(/[^a-z]+/g, "");
+    }
+
     const dataParsers = {
         requirements: function (data, requirements) {
             let logicExpressionParser = require("./logic-expression-parser.js");
@@ -110,25 +114,56 @@ function parseHandbook(pages) {
             }
 
             let isParsingFailed = false;
-            let sections = [{key: parts.shift(), value: parts.shift()}];
+            let sections = [{key: "", value: parts.shift().trim()}];
             while (parts.length) {
                 let lastSection = sections[sections.length - 1];
 
+                let key = "";
+                let newLastSectionValue = lastSection.value;
                 let semicolonIndex = lastSection.value.lastIndexOf(";");
-                if (semicolonIndex < 0) {
-                    isParsingFailed = true;
-                    break;
+                let spaceIndex = lastSection.value.lastIndexOf(" ");
+                if (semicolonIndex >= 0) {
+                    key = lastSection.value.slice(semicolonIndex + 1);
+                    newLastSectionValue = lastSection.value.slice(0, semicolonIndex);
+                } else if (!lastSection.key) {
+                    key = lastSection.value;
+                    newLastSectionValue = "";
                 }
-                let key = lastSection.value.slice(semicolonIndex + 1);
-                lastSection.value = lastSection.value.slice(0, semicolonIndex);
+                if (spaceIndex >= 0) {
+                    let possibleKey = lastSection.value.slice(spaceIndex + 1);
+                    if (requirementsKeyMap[toKey(possibleKey)] && (key ? !requirementsKeyMap[toKey(key)] : true)) {
+                        if (key)
+                            console.warn("Replacing \"" + key + "\" with \"" + possibleKey + "\"");
+                        key = possibleKey;
+                        newLastSectionValue = lastSection.value.slice(0, spaceIndex);
+                    }
+                }
+
+                if (newLastSectionValue)
+                    lastSection.value = newLastSectionValue;
+                else if (!lastSection.key)
+                    sections.shift();
+
+                if (!key) {
+                    if (!lastSection.key) {
+                        key = lastSection.value;
+                        sections.shift();
+                    } else {
+                        isParsingFailed = true;
+                        break;
+                    }
+                } else if (!lastSection.key) {
+                    lastSection.key = lastSection.value;
+                    lastSection.value = "";
+                }
 
                 sections.push({
                     key: key,
-                    value: parts.shift()
+                    value: parts.shift().trim()
                 });
             }
             for (let s = 0; s < sections.length; ++s) {
-                let key = requirementsKeyMap[sections[s].key.toLowerCase().replace(/[^a-z]+/g, "")];
+                let key = requirementsKeyMap[toKey(sections[s].key)];
                 let value = sections[s].value;
                 if (!key) {
                     console.warn("Unknown data \"" + sections[s].key + "\" while parsing requirements:", requirements);
@@ -164,7 +199,7 @@ function parseHandbook(pages) {
         excludedCourses: function (data, value) {
             if (!value)
                 return [];
-            else if (value.operator === "&&")
+            else if (value.operator)
                 value = value.children.map(function (child) { return child.name; }).filter(function (child) { return child; });
             else if (value.type === "Identifier")
                 value = [value.name];
@@ -214,7 +249,7 @@ function parseHandbook(pages) {
 
             let parts = lines[l].split(":");
             let key = parts[0].trim();
-            let mappedKey = dataKeyMap[key.toLowerCase().replace(/[^a-z]+/g, "")]
+            let mappedKey = dataKeyMap[toKey(key)]
             let value = parts.slice(1).join(":").replace("(more info)", "").trim();
 
             if (key === "View course information for previous years.") {

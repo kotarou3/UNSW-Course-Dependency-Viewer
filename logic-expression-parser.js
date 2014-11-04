@@ -81,12 +81,14 @@ function logicTreeToString(tree) {
 function parseHumanReadableList(list, defaultConditional, elementRegex) {
     var isFailed = false;
     var parts = (" " + list + " ")
+        .replace(/\sand\/or\s/ig, " or ")
+        .replace(/\s&\s/g, " and ")
         .replace(/\s+/g, " ")
         .replace(/[.,]+/g, " ")
         .replace(/[\[{]/g, "(")
         .replace(/[\]}]/g, ")")
         .replace(/([()])/g, " $1 ")
-        .replace(/ ([^ ]+)\/([^ ]+)/g, " ( $1 or $2 ) ")
+        .replace(/ ([^ ]+)\s*\/\s*([^ ]+)/g, " ( $1 or $2 ) ")
         .split(" ");
     var parsedParts = [];
     var lastConditional = defaultConditional;
