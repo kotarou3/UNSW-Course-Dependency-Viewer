@@ -533,24 +533,28 @@ function setupSearching(courses) {
 }
 
 function setupSettings() {
-    var settings = JSON.parse(localStorage.getItem("settings")) || {};
+    $("#settings").on("click", function () {
+        var settings = JSON.parse(localStorage.getItem("settings")) || {};
 
-    $("#settings-root-courses").val((settings.rootCourses || []).join(" "));
-    $("#settings-chosen-courses").val((settings.chosenCourses || []).join(" "));
-    $("#settings-completed-courses").val((settings.completedCourses || []).join(" "));
-    if (settings.handbookYear)
-        $("#settings-handbook-year").val(settings.handbookYear);
+        $("#settings-root-courses").val((settings.rootCourses || []).join(" "));
+        $("#settings-chosen-courses").val((settings.chosenCourses || []).join(" "));
+        $("#settings-completed-courses").val((settings.completedCourses || []).join(" "));
+        if (settings.handbookYear)
+            $("#settings-handbook-year").val(settings.handbookYear);
 
-    var options = settings.options;
-    if (options) {
-        $("#settings-hide-unknown-courses").prop("checked", !!options.hideUnknownCourses);
-        $("#settings-hide-prerequisite-courses").prop("checked", !!options.hidePrerequisiteCourses);
-        $("#settings-hide-corequisite-courses").prop("checked", !!options.hideCorequisiteCourses);
-        $("#settings-hide-equivalent-courses").prop("checked", !!options.hideEquivalentCourses);
-        $("#settings-hide-excluded-courses").prop("checked", !!options.hideExcludedCourses);
-    }
+        var options = settings.options;
+        if (options) {
+            $("#settings-hide-unknown-courses").prop("checked", !!options.hideUnknownCourses);
+            $("#settings-hide-prerequisite-courses").prop("checked", !!options.hidePrerequisiteCourses);
+            $("#settings-hide-corequisite-courses").prop("checked", !!options.hideCorequisiteCourses);
+            $("#settings-hide-equivalent-courses").prop("checked", !!options.hideEquivalentCourses);
+            $("#settings-hide-excluded-courses").prop("checked", !!options.hideExcludedCourses);
+        }
+    });
 
     function saveSettings() {
+        var settings = {};
+
         settings.rootCourses = $("#settings-root-courses").val().toUpperCase().split(/[ ,]+/);
         settings.chosenCourses = $("#settings-chosen-courses").val().toUpperCase().split(/[ ,]+/);
         settings.completedCourses = $("#settings-completed-courses").val().toUpperCase().split(/[ ,]+/);
