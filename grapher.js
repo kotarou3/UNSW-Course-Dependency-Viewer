@@ -623,7 +623,7 @@ function showCourseToolbox(course) {
         return;
     }
 
-    var $data = $("#data");
+    var $data = $("#data > table");
     $data.empty();
 
     for (var d = 0; d < displayOrder.length; ++d) {
@@ -652,6 +652,11 @@ function showCourseToolbox(course) {
 
         $row.append($heading).append($contents);
         $data.append($row);
+    }
+    if (course.description) {
+        var $description = $(new DOMParser().parseFromString(course.description, "text/html").body.children);
+        $description.find("table").addBack("table").addClass("table table-condensed");
+        $data.append($("<tr>").append($("<td>").addClass("description").attr("colspan", 2).append($description)));
     }
 
     $("#edit-requirements").off("click").on("click", function () {

@@ -68,22 +68,38 @@ body {
   opacity: 0.5; }
   #search:hover, #search.active {
     opacity: 0.95; }
-  #search #help {
-    font-weight: bold; }
-  #search #search-result {
-    display: none; }
-  #search #data {
-    width: 100%;
-    font-size: 80%; }
-    #search #data th {
+
+#help {
+  font-weight: bold; }
+
+#search-result {
+  display: none; }
+
+#data {
+  max-height: calc(100vh - 14em);
+  overflow: auto;
+  font-size: 80%; }
+  #data table {
+    margin-bottom: 0; }
+    #data table th {
       width: 25%; }
-  #search #actions {
-    width: 100%;
-    display: table;
-    table-layout: fixed; }
-    #search #actions * {
-      display: table-cell;
-      text-align: center; }
+  #data .description .headBlue {
+    display: block;
+    margin-top: 1em;
+    font-size: 120%;
+    font-weight: bold; }
+  #data .description .headBlue + br {
+    display: none; }
+  #data .description table {
+    background-color: transparent; }
+
+#actions {
+  width: 100%;
+  display: table;
+  table-layout: fixed; }
+  #actions * {
+    display: table-cell;
+    text-align: center; }
 
 #requirements-error {
   display: none; }

@@ -86,30 +86,53 @@ body {
     &:hover, &.active {
         opacity: 0.95;
     }
+}
+#help {
+    font-weight: bold;
+}
 
-    #help {
-        font-weight: bold;
-    }
+#search-result {
+    display: none;
+}
+#data {
+    max-height: calc(100vh - 14em);
+    overflow: auto;
 
-    #search-result {
-        display: none;
-    }
-    #data {
-        width: 100%;
+    font-size: 80%;
+
+    table {
+        margin-bottom: 0;
         th {
             width: 25%;
         }
-
-        font-size: 80%;
     }
-    #actions {
-        width: 100%;
-        display: table;
-        table-layout: fixed;
-        * {
-            display: table-cell;
-            text-align: center;
+
+    .description {
+        .headBlue {
+            display: block;
+            margin-top: 1em;
+
+            font-size: 120%;
+            font-weight: bold;
         }
+        .headBlue + br {
+            display: none;
+        }
+
+        table {
+            // Counter bootstrap's setting for `.table .table`
+            // (`.table` class added in javascript)
+            background-color: transparent;
+        }
+    }
+}
+#actions {
+    width: 100%;
+    display: table;
+    table-layout: fixed;
+    * {
+        display: table-cell;
+        text-align: center;
     }
 }
 
