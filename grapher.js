@@ -397,11 +397,9 @@ function setupZooming($viewport) {
     $svg.append($group);
 
     var currentTranslate = {x: 0, y: 0};
-    var currentScale = 1;
     var zoom = d3.behavior.zoom().on("zoom", function () {
         currentTranslate.x = d3.event.translate[0];
         currentTranslate.y = d3.event.translate[1];
-        currentScale = d3.event.scale;
         $group.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
     });
     d3.select($svg[0]).call(zoom);
@@ -411,9 +409,7 @@ function setupZooming($viewport) {
         x = currentTranslate.x - (x - $svg.width() / 2) / scale;
         y = currentTranslate.y - (y - $svg.height() / 2) / scale;
         zoom.translate([x, y]);
-        d3.select($group[0]).transition().duration(1000).attr("transform", "translate(" + x + ", " + y + ") scale(" + currentScale + ")").each("end", function () {
-            zoom.event(d3.select($svg[0]));
-        });
+        zoom.event(d3.select($group[0]).transition().duration(1500));
     }
 }
 
