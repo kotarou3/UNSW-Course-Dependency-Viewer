@@ -396,21 +396,27 @@ function setupZooming($viewport) {
     $group.append($svg.children());
     $svg.append($group);
 
-    var currentTranslate = {x: 0, y: 0};
+    var translate = $svg[0].createSVGTransform();
+    translate.setTranslate(0, 0);
+    var scale = $svg[0].createSVGTransform();
+    scale.setScale(1, 1);
+    $group[0].transform.baseVal.appendItem(translate);
+    $group[0].transform.baseVal.appendItem(scale);
+
     var zoom = d3.behavior.zoom().on("zoom", function () {
-        currentTranslate.x = d3.event.translate[0];
-        currentTranslate.y = d3.event.translate[1];
-        $group.attr("transform", "translate(" + d3.event.translate + ") scale(" + d3.event.scale + ")");
+        translate.setTranslate(d3.event.translate[0], d3.event.translate[1]);
+        scale.setScale(d3.event.scale, d3.event.scale);
     });
     d3.select($svg[0]).call(zoom);
 
     centreAt = function(x, y) {
         var scale = Math.min($svg.width() / $svg[0].viewBox.baseVal.width, $svg.height() / $svg[0].viewBox.baseVal.height);
-        x = currentTranslate.x - (x - $svg.width() / 2) / scale;
-        y = currentTranslate.y - (y - $svg.height() / 2) / scale;
+        x = translate.matrix.e - (x - $svg.width() / 2) / scale;
+        y = translate.matrix.f - (y - $svg.height() / 2) / scale;
         zoom.translate([x, y]);
         zoom.event(d3.select($group[0]).transition().duration(1500));
     }
+    centreAt($svg.width() / 2, $svg.height() / 2);
 }
 
 function setupSelecting($svg, callback) {
