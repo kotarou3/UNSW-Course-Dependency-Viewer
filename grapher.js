@@ -554,6 +554,9 @@ function setupSettings() {
         $("#settings-completed-courses").val((settings.completedCourses || []).join(" "));
         $("#settings-handbook-year").val(settings.handbookYear);
 
+        $("#settings-root-courses").prop("disabled", !!window.singleCourseMode);
+        $("#settings-handbook-year").prop("disabled", !!window.singleCourseMode);
+
         var options = settings.options;
         $("#settings-hide-unknown-courses").prop("checked", !!options.hideUnknownCourses);
         $("#settings-hide-prerequisite-courses").prop("checked", !!options.hidePrerequisiteCourses);
@@ -749,19 +752,23 @@ function showCourseToolbox(course) {
 }
 
 function redrawGraph(handbookYear, courses, options) {
-    if (arguments.length === 0) {
-        var settings = JSON.parse(localStorage.getItem("settings"));
-        if (!settings)
-            return Promise.reject("Nothing to draw.");
+    var settings = JSON.parse(localStorage.getItem("settings"));
 
-        handbookYear = settings.handbookYear;
-        courses = {
-            root: settings.rootCourses || [],
-            chosen: settings.chosenCourses || [],
-            completed: settings.completedCourses || []
-        };
-        options = settings.options || {};
+    handbookYear = handbookYear || settings.handbookYear;
+    courses = $.extend({}, {
+        root: settings.rootCourses || [],
+        chosen: settings.chosenCourses || [],
+        completed: settings.completedCourses || []
+    }, courses);
+    options = $.extend({}, settings.options, options);
+
+    if (window.singleCourseMode) {
+        handbookYear = window.singleCourseMode.year;
+        courses.root = [window.singleCourseMode.code];
     }
+
+    if (courses.root.length === 0)
+        return Promise.reject("Nothing to draw");
 
     var $progressTitle = $("#progress-modal .modal-title");
     var $progressBar = $("#progress-modal .progress-bar");
@@ -812,6 +819,9 @@ function redrawGraph(handbookYear, courses, options) {
         setupSelecting($svg, showCourseToolbox);
         setupSearching(addedCourses);
 
+        if (window.singleCourseMode)
+            showCourseToolbox(handbook[window.singleCourseMode.code]);
+
         $("#progress-modal").modal("hide");
 
         return $svg;
@@ -822,8 +832,12 @@ $(document).ready(function () {
     setupSettings();
 
     var settings = JSON.parse(localStorage.getItem("settings"));
+    var params = querystring.parse(location.search.slice(1));
 
-    if (!settings.rootCourses || settings.rootCourses.length === 0) {
+    if (params.year && params.code) {
+        window.singleCourseMode = {year: params.year, code: params.code};
+        redrawGraph().done();
+    } else if (!settings.rootCourses || settings.rootCourses.length === 0) {
         $("#settings").click();
     } else {
         redrawGraph().done();
