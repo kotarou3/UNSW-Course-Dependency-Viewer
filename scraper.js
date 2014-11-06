@@ -40,6 +40,7 @@ function downloadHandbook(year) {
 function parseHandbook(pages) {
     let path = require("path");
     let libxml = require("libxmljs");
+    let url = require("url");
 
     const dataKeyMap = {
         faculty: "faculty",
@@ -237,7 +238,14 @@ function parseHandbook(pages) {
         if (!courses[courses[code].code]) // For pages that aren't named the course they're describing
             courses[courses[code].code] = courses[code];
 
-        let lines = document.find("//*[text() = 'Faculty:']/ancestor::*[count(. | //*[text() = 'School:']/ancestor::*) = count(//*[text() = 'School:']/ancestor::*)][1]/*").map(function (elem) { return elem.text().trim(); });
+        let lines = document.find(
+            // Find the first common ancestor between the "Faculty" and "School" entries and return its children
+            "//*[text() = 'Faculty:']" +
+            "/ancestor::*[" +
+                "count(. | //*[text() = 'School:']/ancestor::*) = count(//*[text() = 'School:']/ancestor::*)" +
+            "]" +
+            "[1]/*"
+        ).map(function (elem) { return elem.text().trim(); });
         let rawData = {};
         let data = {};
         let isRequirements = false;
@@ -282,13 +290,50 @@ function parseHandbook(pages) {
         courses[code].rawData = rawData;
         courses[code].data = data;
 
-        let description = document.find("((//*[text() = 'Description']/ancestor-or-self::*/following-sibling::*[text()])[1]/preceding-sibling::*)[last()]/following-sibling::*[text()]");
-        description = description.filter(function (part) {
-            return part.text().trim();
-        }).map(function (part) {
-            return part.toString();
-        }).join("");
-        courses[code].description = description;
+        let description = document.find(
+            // Find the next elements in the document following the "Description" element that contains text
+            // but don't go any further up the hierarchy after the first one is found
+            "(" +
+                "(//*[text() = 'Description']/ancestor-or-self::*/following-sibling::*[normalize-space()])" +
+                "[1]/preceding-sibling::*" +
+            ")" +
+            "[last()]/following-sibling::*[normalize-space()]"
+        );
+        if (description.length > 0) {
+            let commonAncestor = document.get(
+                // Find the first common ancestor between the "Description" and "Faculty" elements
+                "//*[text() = 'Description']" +
+                "/ancestor::*[" +
+                    "count(. | //*[text() = 'Faculty:']/ancestor::*) = count(//*[text() = 'Faculty:']/ancestor::*)" +
+                "]" +
+                "[1]"
+            );
+
+            let descriptionDepth = 0;
+            for (let node = description[0]; node.parent && (node = node.parent()); ++descriptionDepth)
+                ;
+            let commonAncestorDepth = 0;
+            for (let node = commonAncestor; node.parent && (node = node.parent()); ++commonAncestorDepth)
+                ;
+
+            if (descriptionDepth >= commonAncestorDepth)
+                description = description.filter(function (part) {
+                    // Fix up any relative links
+                    let links = part.find(".//a");
+                    for (let l = 0; l < links.length; ++l) {
+                        let href = links[l].attr("href");
+                        if (href)
+                            href.value(url.resolve(uri, href.value()));
+                    }
+
+                    return part.text().trim();
+                }).map(function (part) {
+                    return part.toString();
+                });
+            else
+                description = [];
+        }
+        courses[code].description = description.join("");
     }
 
     return courses;
