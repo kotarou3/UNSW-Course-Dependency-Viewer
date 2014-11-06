@@ -535,23 +535,31 @@ function setupSearching(courses) {
 }
 
 function setupSettings() {
+    if (!localStorage.getItem("settings")) {
+        var settings = {
+            handbookYear: $("#settings-handbook-year > option").first().val(),
+            options: {
+                hideUnknownCourses: true,
+                hideExcludedCourses: true
+            }
+        };
+        localStorage.setItem("settings", JSON.stringify(settings));
+    }
+
     $("#settings").on("click", function () {
         var settings = JSON.parse(localStorage.getItem("settings")) || {};
 
         $("#settings-root-courses").val((settings.rootCourses || []).join(" "));
         $("#settings-chosen-courses").val((settings.chosenCourses || []).join(" "));
         $("#settings-completed-courses").val((settings.completedCourses || []).join(" "));
-        if (settings.handbookYear)
-            $("#settings-handbook-year").val(settings.handbookYear);
+        $("#settings-handbook-year").val(settings.handbookYear);
 
         var options = settings.options;
-        if (options) {
-            $("#settings-hide-unknown-courses").prop("checked", !!options.hideUnknownCourses);
-            $("#settings-hide-prerequisite-courses").prop("checked", !!options.hidePrerequisiteCourses);
-            $("#settings-hide-corequisite-courses").prop("checked", !!options.hideCorequisiteCourses);
-            $("#settings-hide-equivalent-courses").prop("checked", !!options.hideEquivalentCourses);
-            $("#settings-hide-excluded-courses").prop("checked", !!options.hideExcludedCourses);
-        }
+        $("#settings-hide-unknown-courses").prop("checked", !!options.hideUnknownCourses);
+        $("#settings-hide-prerequisite-courses").prop("checked", !!options.hidePrerequisiteCourses);
+        $("#settings-hide-corequisite-courses").prop("checked", !!options.hideCorequisiteCourses);
+        $("#settings-hide-equivalent-courses").prop("checked", !!options.hideEquivalentCourses);
+        $("#settings-hide-excluded-courses").prop("checked", !!options.hideExcludedCourses);
     });
 
     function saveSettings() {
@@ -813,8 +821,11 @@ function redrawGraph(handbookYear, courses, options) {
 $(document).ready(function () {
     setupSettings();
 
-    if (!localStorage.getItem("settings"))
-        $("#settings-modal").modal("show");
-    else
+    var settings = JSON.parse(localStorage.getItem("settings"));
+
+    if (!settings.rootCourses || settings.rootCourses.length === 0) {
+        $("#settings").click();
+    } else {
         redrawGraph().done();
+    }
 });
