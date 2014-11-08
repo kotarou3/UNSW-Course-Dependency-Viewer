@@ -23,17 +23,30 @@ function downloadHandbook(year) {
     let libxml = require("libxmljs");
     let url = require("url");
 
-    let coursesUrl = "http://www.handbook.unsw.edu.au/vbook" + year + "/brCoursesByAtoZ.jsp?StudyLevel=Undergraduate&descr=All";
-    return request(coursesUrl).spread(function (response, body) {
-        return libxml.parseHtmlString(body).find("//table[@class = 'tabluatedInfo']//a/@href").map(function (courseLink) {
-            return url.resolve(coursesUrl, courseLink.value());
-        });
-    }).reduce(function (pages, courseLink) {
-        console.warn("Downloading", courseLink);
-        return request(courseLink).spread(function (response, body) {
-            pages[courseLink] = body;
+    const types = [/*"Undergraduate", */"Postgraduate", "Research"];
+
+    let tasks = [];
+    for (let t = 0; t < types.length; ++t) {
+        let coursesUrl = "http://www.handbook.unsw.edu.au/vbook" + year + "/brCoursesByAtoZ.jsp?StudyLevel=" + types[t] + "&descr=All";
+        tasks.push(request(coursesUrl).spread(function (response, body) {
+            return libxml.parseHtmlString(body).find("//table[@class = 'tabluatedInfo']//a/@href").map(function (courseLink) {
+                return url.resolve(coursesUrl, courseLink.value());
+            });
+        }).map(function (courseLink) {
+            return request(courseLink).spread(function (response, body) {
+                console.warn("Downloaded", courseLink);
+                return [courseLink, body];
+            });
+        }).reduce(function (pages, data) {
+            pages[data[0]] = data[1];
             return pages;
-        });
+        }, {}));
+    }
+
+    return Promise.all(tasks).reduce(function (allPages, pages) {
+        for (let p in pages)
+            allPages[p] = pages[p];
+        return allPages;
     }, {});
 }
 
@@ -75,6 +88,7 @@ function parseHandbook(pages) {
         prerequiistes: "prerequisiteCourses",
         parerequisite: "prerequisiteCourses",
         prerquisite: "prerequisiteCourses",
+        prerequisitie: "prerequisiteCourses",
         prererquisite: "prerequisiteCourses",
         prequisite: "prerequisiteCourses",
         prereq: "prerequisiteCourses",
@@ -85,10 +99,12 @@ function parseHandbook(pages) {
         corequisites: "corequisiteCourses",
         corequistes: "corequisiteCourses",
         corequiste: "corequisiteCourses",
+        corerequisite: "corequisiteCourses",
         co: "corequisiteCourses",
         andcorequisite: "corequisiteCourses",
         prerequisitecorequisite: "corequisiteCourses",
         prerequisiteorcorequisite: "corequisiteCourses",
+        prerequisitesorcorequisites: "corequisiteCourses",
         precorequisite: "corequisiteCourses",
 
         excluded: "excludedCourses",
@@ -224,8 +240,14 @@ function parseHandbook(pages) {
 
     let courses = {};
     for (let uri in pages) {
-        let code = path.basename(uri, ".html");
+        let code = path.basename(uri, ".html").toUpperCase();
         let document = libxml.parseHtmlString(pages[uri]);
+
+        if (courses[code] && path.basename(courses[code].uri, ".html") === code)
+            // With wrong URI -> Overwrite
+            // With correct URI -> Ignore
+            // TODO: Do something better than just ignoring duplicates
+            continue;
         courses[code] = {};
 
         let name = document.get("//title").text().split("-");

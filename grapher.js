@@ -879,13 +879,13 @@ function redrawGraph(handbookYear, courses, options) {
 
     return Promise.all([
         getHandbook(handbookYear, function (loaded, total) {
-            loaded /= 1000;
-            total /= 1000;
+            loaded /= 1000000;
+            total /= 1000000;
 
             if (!loaded && !total)
                 $progressTitle.text("Downloading Handbook");
             else
-                $progressTitle.text("Downloading Handbook (" + Math.round(loaded) + " KB " + (total ? "of " + Math.round(total) + " KB" : "received") + ")");
+                $progressTitle.text("Downloading Handbook (" + loaded.toFixed(2) + " MB " + (total ? "of " + total.toFixed(2) + " MB" : "received") + ")");
 
             if (total) {
                 $progressBar.removeClass("progress-bar-striped active");
