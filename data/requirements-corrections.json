@@ -9815,5 +9815,1434 @@
             ]
         },
         "corequisiteCourses": ""
+    },
+    "Prerequisites: (ACCT5930 or COMM5003 or ACCT5906) and (FINS5511 or FINS5513) or (enrolment in program 8406 or program 8425)": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "ACCT5930"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "COMM5003"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "ACCT5906"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "FINS5511"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "FINS5513"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: COMM5005 or ECON5248 or COMM5011 or enrolment in (program 8413 or program 9273 or program 5273) or (REST0001 plus enrolment in program 8127)": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "COMM5005"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ECON5248"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMM5011"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "REST0001"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: ACCT5930 and Corequisite: ACCT5942": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "ACCT5930"
+        },
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "ACCT5942"
+        }
+    },
+    "Prerequisite: ACCT5997 or equivalent": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "ACCT5997"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: ACTL5101 and enrolment in program 8411 or 8416": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "ACTL5101"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: ACTL5101, ACTL5102 and enrolment in program 8411 or 8416": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "ACTL5101"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ACTL5102"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: ACTL5101 and enrolment in program 8411 or 8416  Corequisite: ACTL5103": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "ACTL5101"
+        },
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "ACTL5103"
+        }
+    },
+    "Prerequisite: ACTL5101, ACTL5102 and enrolment in program 8411 or 8416  Corequisite: ACTL5103": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "ACTL5101"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ACTL5102"
+                }
+            ]
+        },
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "ACTL5103"
+        }
+    },
+    "Prerequisite: ACTL5100 AND Corequisites: ACTL5106 and ACTL5109": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "ACTL5100"
+        },
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "ACTL5106"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ACTL5109"
+                }
+            ]
+        }
+    },
+    "Prerequisite: ACTL5109 or (ACTL5100 and Corequisite ACTL5109)": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "ACTL5109"
+        },
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "ACTL5100"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ACTL5109"
+                }
+            ]
+        }
+    },
+    "Prerequisite: A pass in flight screening, AVEN1920, AVIA1321, PHYS1149, AVIA1401, AVIA1901, MATH1041, PHYS1211": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "AVEN1920"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "AVIA1321"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "PHYS1149"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "AVIA1401"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "AVIA1901"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MATH1041"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "PHYS1211"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: COMM5001, COMM5002, COMM5003, enrolment in program 8404 or 8417 and completion of 48 units of credit": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "COMM5001"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMM5002"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMM5003"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "MGMT5050 AND (enrolment in program 8404 or 8417) AND (completion of 42 units of credit)": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "MGMT5050"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: a mark of at least 70 in COMP9032 and COMP9024.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "COMP9032"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMP9024"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: a mark of at least 70 in COMP9024.": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "COMP9024"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: 70 WAM and COMP9024.": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "COMP9024"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: ECON6003 or ECON4207 or approval of Head of School of Economics": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "ECON6003"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ECON4207"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: 30 uoc overall including EDST6760": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "EDST6760"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: EDST5440 and enrolment in Master of Education (TESOL)": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "EDST5440"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite or Corequisite: ACCT5906 or ECON5103 or enrolment in program 9273 or program 5273 or program 7273 or program 8007": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "ACCT5906"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ECON5103"
+                }
+            ]
+        }
+    },
+    "Prerequisite or corequisite: FINS5513 or enrolment in program 8406.": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "FINS5513"
+        }
+    },
+    "Prerequisite: (FINS5512 or Co-requisite FINS5512) OR enrolment in Program (8406 or 8413).": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "FINS5512"
+        }
+    },
+    "Prerequisite: FINS5513 or enrolment in program 8406.": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "FINS5513"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite or Corequisite FINS5513 or FINS5561or enrolment in program 8406": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "FINS5513"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "FINS5561"
+                }
+            ]
+        }
+    },
+    "Prerequisite: FINS5561 or corequisite: FINS5510 or enrolment in program 8413.": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "FINS5561"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "FINS5510"
+                }
+            ]
+        }
+    },
+    "Prerequisite or Corequisite: FINS5512 or enrolment in program 8406 or program 8413": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "FINS5512"
+        }
+    },
+    "Prerequisite: FINS5512 and FINS5513 and enrolment in program 8404 or 8417 or 8419 or 8421 and completion of 48 UOC.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "FINS5512"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "FINS5513"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: (INFS5885 or INFS5978) or enrolment in Program (8425 or 8435).": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "INFS5885"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "INFS5978"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: INFS5621 OR INFS5978 OR enrolment in Program 8435": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "INFS5621"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "INFS5978"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: INFS5885 or INFS5978 or enrolment in Program 8425 or 8435": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "INFS5885"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "INFS5978"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: (COMM5005 or COMM5011 or ECON5248) or enrolment in Program (8425 or 8435).": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "COMM5005"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMM5011"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ECON5248"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite/Corequisite: JURD7285 Equity and Trusts": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "JURD7285"
+        }
+    },
+    "Pre-requisites: Principles of Public Law (JURD7141/JURD7140/LAWS1140/LAWS1141) & Principles of Private Law (JURD7150/JURD7171/LAWS1071/LAWS1150) & pre-2013: 36 UOC of JURD courses / fm 2013: 72 UOC of JURD courses.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "JURD7141"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "JURD7140"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "LAWS1140"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "LAWS1141"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "JURD7150"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "JURD7171"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "LAWS1071"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "LAWS1150"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: Resolving Civil Disputes (LAWS2371/JURD7271) and Court Process, Evidence & Proof (LAWS2351/JURD7251) OR Litigation 1 (LAWS2311/JURD7211) and Litigation 2 (LAWS2321/JURD7221).": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "LogicalExpression",
+                            "operator": "||",
+                            "children": [
+                                {
+                                    "type": "Identifier",
+                                    "name": "LAWS2371"
+                                },
+                                {
+                                    "type": "Identifier",
+                                    "name": "JURD7271"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "LogicalExpression",
+                            "operator": "||",
+                            "children": [
+                                {
+                                    "type": "Identifier",
+                                    "name": "LAWS2351"
+                                },
+                                {
+                                    "type": "Identifier",
+                                    "name": "JURD7251"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "LogicalExpression",
+                            "operator": "||",
+                            "children": [
+                                {
+                                    "type": "Identifier",
+                                    "name": "LAWS2311"
+                                },
+                                {
+                                    "type": "Identifier",
+                                    "name": "JURD7211"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "LogicalExpression",
+                            "operator": "||",
+                            "children": [
+                                {
+                                    "type": "Identifier",
+                                    "name": "LAWS2321"
+                                },
+                                {
+                                    "type": "Identifier",
+                                    "name": "JURD7221"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre-requisites: Contracts (any one of LAWS1072, LAWS1075, JURD7172, or JURD7175) and  36 UOC of JURD courses for students enrolled prior to 2013. For students enrolled after 2013, pre-requisite: 72 UOC of JURD courses.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "LAWS1072"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "LAWS1075"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7172"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7175"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre-requisites: Administrative Law (any one of LAWS1160, or JURD7160) and  36 UOC of JURD courses for students enrolled prior to 2013. For students enrolled after 2013, pre-requisite: 72 UOC of JURD courses.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "LAWS1160"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7160"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre-requisite: Business Associations (JURD7224)": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "JURD7224"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: 72 UOC of JURD courses completed, including at least one Trade Practices or Intellectual Property course (any of JURD7522, JURD7617, JURD7621, JURD7321, JURD7350, JURD7357, JURD7446, JURD7448, JURD7603).": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "JURD7522"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7617"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7621"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7321"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7350"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7357"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7446"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7448"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7603"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: Principles of Public Law (JURD7141/JURD7140) and 36 UOC of JD courses for enrolled prior to 2013. For students enrolled after 2013, 72 UOC of JD courses.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "JURD7141"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "JURD7140"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: Principles of Public Law (JURD7141/JURD7140), Contracts (JURD7175)/Contracts 2 (JURD7172) and 36 UOC of JD courses for students enrolled prior to 2013. For students enrolled after 2013, 72 UOC of JD courses.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "JURD7141"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "JURD7140"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "JURD7175"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "JURD7172"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite or Corequisite: MARK5800 or MARK5801 or enrolment in program 8406": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "MARK5800"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MARK5801"
+                }
+            ]
+        }
+    },
+    "Prerequisite or Corequisite: MARK5800 or MARK5801 or enrolment in program 7291 or 5291 or 8291": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "MARK5800"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MARK5801"
+                }
+            ]
+        }
+    },
+    "Prerequisite or corequisite : MARK5800 or MARK5801 OR enrolment in program 7291 or 5291 or 8291": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "MARK5800"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MARK5801"
+                }
+            ]
+        }
+    },
+    "Prerequisite: 24uoc overall including ARTS5100, and enrolment in the Master of Journalism & Communication or Master of Public Relations & Advertising. Minimum WAM 75. This course must be taken in final semester.": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "ARTS5100"
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre-req: Enrolment in MFIN6201 AND MFIN6210 AND an overall WAM of 85% or greater in 8406.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "MFIN6201"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MFIN6210"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: STRE6010 and enrolment in program 7330": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "STRE6010"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite/Corequisite: MNGT6271 and enrolment in Graduate Certificate in Change Management": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "MNGT6271"
+        }
+    },
+    "Prerequisite/corequisite: MNGT6275 and enrolment in Graduate Diploma in Management or Master of Law and Management or Master of Business Administration (Exec)": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "MNGT6275"
+        }
+    },
+    "Prerequisite: OPTM7103. Program enrolment in 8760, 5665, or 7435": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "OPTM7103"
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre requisite: OPTM7104 restricted to 8760/5665/7435/5523": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "OPTM7104"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite OPTM7309,must be enrolled in Program 8760, or 5665 or 7435": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "OPTM7309"
+        },
+        "corequisiteCourses": ""
+    },
+    "Students must have completed at least three of the following four courses - SAHT9111, SAHT9112, SAHT9113 and SAHT9126 - as a prerequisite to SAHT9114.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9111"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9112"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9113"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9111"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9112"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9126"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9111"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9113"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9126"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9112"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9113"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SAHT9126"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre-requisites SART9732": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "SART9732"
+        },
+        "corequisiteCourses": ""
+    },
+    "SOCF5005, SOCF5103, or equivalent postgraduate research course, or 18 uoc with minimum distinction-level average in the following Masters programs 8930 (Social Work in Counselling), 8931 (Couple and Family Therapy), or 8939 (Social Development)": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "SOCF5005"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "SOCF5103"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "PRE-REQUISITE: Photomedia 2 (SOMA9714)": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "SOMA9714"
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre-requisites SOMA9717": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "SOMA9717"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: Enrolment in the Master of Policy Studies program and completion of 18 uoc overall including 12 uoc from the following, SLSP5001, SLSP5002, SLSP5004, SLSP5017": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5001"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5002"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5001"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5004"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5001"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5017"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5002"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5004"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5002"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5017"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "&&",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5004"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "SLSP5017"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: Enrolment in the Master of Development Studies 48uoc stream; or SRAP5101 and enrolment in a Master of Development Studies, International Relations or Public Policy & Governance 72uoc stream": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "SRAP5101"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: Enrolment in the 48uoc stream for Master of Development Studies, Int. Relations or Public Policy & Governance; or SRAP5101, SRAP5102 and in the 72uoc stream for Master of Development Studies, Int. Relations or Public Policy & Governance": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "SRAP5101"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "SRAP5102"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite SWCH9001": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "SWCH9001"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: TABL5511 or LEGT5511 or permission from the Head of School.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "TABL5511"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "LEGT5511"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisites: ACCT5930 or COMM5003 or ACCT5906 and FINS5511 or FINS5513 or enrolment in program 8406 or program 8425": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "ACCT5930"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "COMM5003"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "ACCT5906"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "FINS5511"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "FINS5513"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite or Corequisite: ACCT5906 or enrolment in program 9273 or program 5273 or program 7273 or program 8007": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "ACCT5906"
+        }
+    },
+    "Prerequisite or Corequisite: COMM5003 or FINS5512 or enrolment in program 8406": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "COMM5003"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "FINS5512"
+                }
+            ]
+        }
+    },
+    "Prerequisite: INFS5885 or INFS5978 or enrollment in Program 8425 or 8435": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "INFS5885"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "INFS5978"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite/corequisite: MNGT6275 and enrolment in Graduate Diploma in Management or Master of Law and Management": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "MNGT6275"
+        }
+    },
+    "Students must have completed SOMA9201 3D Foundation": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "SOMA9201"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: ZPEM1302 or ZPEM1304 or equivalent": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "ZPEM1302"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ZPEM1304"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisites: ACCT5930 or COMM5003 or ACCT5906 and FIN5511 or FINS5513 or enrolment in program 8406 or program 8425": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "ACCT5930"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "COMM5003"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "ACCT5906"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "FINS5511"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "FINS5513"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: COMM5005 or ECON5248 or COMM5011 or enrolment in (Program 8413 or Program 9273)": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "COMM5005"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ECON5248"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMM5011"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite = Corequisite: COMM5002 or enrolment in program 8728": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "COMM5002"
+        }
+    },
+    "Prerequisite: ACTL5101, ACTL5102 and enrolment in program 8411": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "ACTL5101"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "ACTL5102"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: A mark of 70% or more in ACTL5100": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "ACTL5100"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: a mark of 65 or higher in GSOE9210.": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "GSOE9210"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: INFS5988 or INFS5978 or enrolled in program 8407": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "INFS5988"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "INFS5978"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite: INFS5978 OR enrolment in Program 8404, 8407, 8417, 8425, 8435": {
+        "prerequisiteCourses": {
+            "type": "Identifier",
+            "name": "INFS5978"
+        },
+        "corequisiteCourses": ""
+    },
+    "Prerequisite or Corequisite: INFS5984 or enrolment in program 8407": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "Identifier",
+            "name": "INFS5984"
+        }
+    },
+    "Prerequisite: INFS5988 or INFS5978 or enrolment in a CSE program": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "INFS5988"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "INFS5978"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
+    },
+    "Pre:requisite or corequisite : MARK5800 OR MARK5801 OR enrolment in program 7291 OR 5291 OR 8291": {
+        "prerequisiteCourses": "",
+        "corequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "MARK5800"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MARK5801"
+                }
+            ]
+        }
+    },
+    "Pre-req: Enrolment in MFIN6201 AND MFIN6210 AND an overall WAM of 85% of greater in 8406.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "MFIN6201"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "MFIN6210"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
     }
 }
