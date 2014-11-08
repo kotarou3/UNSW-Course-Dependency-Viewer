@@ -14,6 +14,7 @@ body {
         polygon, ellipse, path {
             fill: none;
             stroke: black;
+            stroke-width: 1px;
         }
         polygon, ellipse {
             pointer-events: all;
@@ -54,17 +55,15 @@ body {
         @include node-edge-colour(darkgoldenrod);
     }
 
-    .root {
-        @include node-edge-colour(darkgoldenrod);
-        &.node polygon {
-            stroke-width: 0.2em;
-        }
+    .root polygon {
+        stroke-width: 2px;
+        fill: yellow;
     }
-    .chosen {
-        @include node-edge-colour(blue);
+    .chosen polygon {
+        fill: lightblue;
     }
-    .completed {
-        @include node-edge-colour(green);
+    .completed polygon {
+        fill: lightgreen;
     }
 
     .incomplete {

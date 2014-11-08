@@ -11,7 +11,8 @@ body {
       font-size: 90%; }
     #output .node polygon, #output .node ellipse, #output .node path, #output .edge polygon, #output .edge ellipse, #output .edge path {
       fill: none;
-      stroke: black; }
+      stroke: black;
+      stroke-width: 1px; }
     #output .node polygon, #output .node ellipse, #output .edge polygon, #output .edge ellipse {
       pointer-events: all; }
   #output .edge > polygon {
@@ -38,20 +39,13 @@ body {
     stroke: darkgoldenrod; }
   #output .selected.edge polygon {
     fill: darkgoldenrod; }
-  #output .root path, #output .root polygon, #output .root ellipse {
-    stroke: darkgoldenrod; }
-  #output .root.edge polygon {
-    fill: darkgoldenrod; }
-  #output .root.node polygon {
-    stroke-width: 0.2em; }
-  #output .chosen path, #output .chosen polygon, #output .chosen ellipse {
-    stroke: blue; }
-  #output .chosen.edge polygon {
-    fill: blue; }
-  #output .completed path, #output .completed polygon, #output .completed ellipse {
-    stroke: green; }
-  #output .completed.edge polygon {
-    fill: green; }
+  #output .root polygon {
+    stroke-width: 2px;
+    fill: yellow; }
+  #output .chosen polygon {
+    fill: lightblue; }
+  #output .completed polygon {
+    fill: lightgreen; }
   #output .incomplete path, #output .incomplete polygon, #output .incomplete ellipse {
     stroke: red; }
   #output .incomplete.edge polygon {
