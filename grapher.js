@@ -284,6 +284,8 @@ function findNodesAndEdges(handbook, courses, options) {
     for (var n = 0; n < oldNodes.length; ++n)
         if (!nodesToRemove[oldNodes[n].id])
             nodes.push(oldNodes[n]);
+        else
+            delete addedCourses[oldNodes[n].id];
     for (var e = 0; e < oldEdges.length; ++e)
         if (!edgesToRemove[oldEdges[e].id])
             edges.push(oldEdges[e]);
