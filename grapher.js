@@ -700,7 +700,7 @@ function showCourseToolbox(handbook, course) {
         eftsl: "EFTSL",
         hoursPerWeek: "Hours per Week",
         requirements: "Requirements",
-        isParsingRequirementsFailed: "(Auto-Parsing Failed)",
+        isParsingRequirementsFailed: "(Parsing Failed)",
         prerequisiteCourses: "Prerequisite Courses",
         corequisiteCourses: "Corequisite Courses",
         excludedCourses: "Excluded Courses",
@@ -745,6 +745,8 @@ function showCourseToolbox(handbook, course) {
             data = logicTreeToString(data);
         else if (!data)
             data = "???";
+        else
+            data = data.toString();
 
         var $row = $("<tr>");
         var $heading = $("<th>");
@@ -758,7 +760,7 @@ function showCourseToolbox(handbook, course) {
             var parts = data.split(/\b([A-Z]{4}[0-9]{4})\b/i);
             for (var p = 0; p < parts.length; ++p) {
                 var code = parts[p].toUpperCase();
-                if (!handbook[code])
+                if (!handbook[code] || course.code === code)
                     $contents.append(document.createTextNode(parts[p]));
                 else
                     $contents.append($("<a>").addClass("internal-link").attr("href", "?" + querystring.stringify({year: JSON.parse(localStorage.getItem("settings")).handbookYear, code: code})).text(code));
