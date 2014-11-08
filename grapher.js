@@ -460,10 +460,42 @@ function setupZooming($viewport) {
     $group[0].transform.baseVal.appendItem(translate);
     $group[0].transform.baseVal.appendItem(scale);
 
-    var zoom = d3.behavior.zoom().on("zoom", function () {
+    var startPoints = {};
+    var isMoved = false;
+    var zoom = d3.behavior.zoom().on("zoomstart", function () {
+        var event = d3.event.sourceEvent;
+        if (event) {
+            var points = event.touches || [event];
+            for (var p = 0; p < points.length; ++p)
+                startPoints[points[p].identifier] = points[p];
+        }
+    }).on("zoom", function () {
+        var event = d3.event.sourceEvent;
+        if (event && !isMoved) {
+            var distanceSquared = 0;
+            var points = event.touches || [event];
+            for (var p = 0; p < points.length; ++p) {
+                var x = startPoints[points[p].identifier].pageX - points[p].pageX;
+                var y = startPoints[points[p].identifier].pageY - points[p].pageY;
+                distanceSquared = Math.max(distanceSquared, x * x + y * y);
+            }
+
+            if (distanceSquared > 25)
+                isMoved = true;
+        }
+
         translate.setTranslate(d3.event.translate[0], d3.event.translate[1]);
         scale.setScale(d3.event.scale, d3.event.scale);
+    }).on("zoomend", function () {
+        startPoints = {};
+
+        if (isMoved)
+            setTimeout(function () { isMoved = false; }, 0);
     });
+    $svg[0].addEventListener("click", function (e) {
+        if (isMoved)
+            e.stopImmediatePropagation();
+    }, true);
     d3.select($svg[0]).call(zoom);
 
     centreAt = function(x, y) {
