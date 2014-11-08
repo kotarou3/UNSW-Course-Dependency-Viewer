@@ -121,7 +121,7 @@ function parseHandbook(pages) {
         requirements: function (data, requirements) {
             let logicExpressionParser = require("./logic-expression-parser.js");
 
-            if (!requirements.match(/[A-Z]{4}[0-9]{4}/i))
+            if (!requirements.match(/\b[A-Z]{4}[0-9]{4}\b/i))
                 return requirements;
 
             let parts = requirements.split(":").map(function (part) { return part.trim(); });
@@ -189,7 +189,7 @@ function parseHandbook(pages) {
                 }
 
                 value = value.toUpperCase().replace(/\b([A-Z]{4})\s+([0-9]{4})\b/g, "$1$2");
-                if (!value.match(/[A-Z]{4}[0-9]{4}/))
+                if (!value.match(/\b[A-Z]{4}[0-9]{4}\b/))
                     continue;
 
                 let result = logicExpressionParser.parseHumanReadableList(value, "&&", /^[A-Z]{4}[0-9]{4}$/);
