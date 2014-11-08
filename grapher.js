@@ -391,6 +391,61 @@ function generateGraph(handbook, courses, options) {
     return {$svg: $svg, addedCourses: graphData.addedCourses};
 }
 
+var currentParams = {};
+function navigateTo(year, code) {}
+function setupNavigating(handbook, currentYear, shownCourses) {
+    currentParams = querystring.parse(location.search.slice(1));
+
+    navigateTo = function (year, code) {
+        if (year === currentYear && shownCourses.indexOf(code) >= 0) {
+            window.history.pushState({code: code}, "", "");
+            showCourseToolbox(handbook, handbook[code]);
+        } else if (!year && !code) {
+            window.history.pushState(null, "", "?");
+            delete window.singleCourseMode;
+            redrawGraph().then(showCourseToolbox.bind(null, null, null)).done();
+        } else if (!code) {
+            window.history.pushState(null, "", "");
+            showCourseToolbox();
+        } else {
+            window.history.pushState({code: code}, "", "?" + querystring.stringify({year: year, code: code}));
+            window.singleCourseMode = {year: year, code: code};
+            redrawGraph().then(function (data) {
+                showCourseToolbox(data.handbook, data.handbook[code]);
+            }).done();
+        }
+    };
+
+    $(document).off("click.internal-link").on("click.internal-link", ".internal-link", function (e) {
+        var href = this.getAttribute("href");
+        var params = querystring.parse(href.slice(1));
+
+        if (params.year && params.code) {
+            e.preventDefault();
+            navigateTo(params.year, params.code);
+        }
+    });
+
+    $(window).off("popstate").on("popstate", function (e) {
+        var params = querystring.parse(location.search.slice(1));
+        var task = Promise.resolve({handbook: handbook});
+        if ((!params.year || !params.code) && window.singleCourseMode) {
+            delete window.singleCourseMode;
+            task = redrawGraph();
+        } else if (params.year !== currentParams.year || params.code !== currentParams.code) {
+            window.singleCourseMode = {year: params.year, code: params.code};
+            task = redrawGraph();
+        }
+
+        task.then(function (data) {
+            if (e.originalEvent.state)
+                showCourseToolbox(data.handbook, data.handbook[e.originalEvent.state.code]);
+            else
+                showCourseToolbox();
+        }).done();
+    });
+}
+
 function centreAt(x, y) {};
 function setupZooming($viewport) {
     var $svg = $viewport.children();
@@ -532,8 +587,7 @@ function setupSearching(courses) {
         }
     };
 
-    $("#search-query input").on("input", setupSearching.searchFunction);
-    setupSearching.searchFunction();
+    $("#search-query input").val("").on("input", setupSearching.searchFunction);
 }
 
 function setupSettings() {
@@ -565,6 +619,12 @@ function setupSettings() {
         $("#settings-hide-corequisite-courses").prop("checked", !!options.hideCorequisiteCourses);
         $("#settings-hide-equivalent-courses").prop("checked", !!options.hideEquivalentCourses);
         $("#settings-hide-excluded-courses").prop("checked", !!options.hideExcludedCourses);
+
+        $("#exit-single-course-mode").toggle(!!window.singleCourseMode);
+    });
+
+    $("#exit-single-course-mode").on("click", function () {
+        navigateTo();
     });
 
     function saveSettings() {
@@ -593,7 +653,7 @@ function setupSettings() {
     $("#save-settings").one("click", saveSettings);
 }
 
-function showCourseToolbox(course) {
+function showCourseToolbox(handbook, course) {
     var dataKeyMap = { // const
         code: "Code",
         name: "Name",
@@ -660,10 +720,18 @@ function showCourseToolbox(course) {
 
         $heading.text(dataKeyMap[key]);
 
-        if (key === "uri")
+        if (key === "uri") {
             $contents.append($("<a>").attr({href: data, target: "_blank"}).text(data));
-        else
-            $contents.text(data);
+        } else {
+            var parts = data.split(/\b([A-Z]{4}[0-9]{4})\b/i);
+            for (var p = 0; p < parts.length; ++p) {
+                var code = parts[p].toUpperCase();
+                if (!handbook[code])
+                    $contents.append(document.createTextNode(parts[p]));
+                else
+                    $contents.append($("<a>").addClass("internal-link").attr("href", "?" + querystring.stringify({year: JSON.parse(localStorage.getItem("settings")).handbookYear, code: code})).text(code));
+            }
+        }
 
         $row.append($heading).append($contents);
         $data.append($row);
@@ -817,16 +885,16 @@ function redrawGraph(handbookYear, courses, options) {
         var $viewport = $("#output");
         $viewport.empty().append($svg);
 
+        setupNavigating(handbook, handbookYear, graph.addedCourses);
         setupZooming($viewport);
-        setupSelecting($svg, showCourseToolbox);
+        setupSelecting($svg, function (node) {
+            navigateTo(handbookYear, node && node.code);
+        });
         setupSearching(addedCourses);
-
-        if (window.singleCourseMode)
-            showCourseToolbox(handbook[window.singleCourseMode.code]);
 
         $("#progress-modal").modal("hide");
 
-        return $svg;
+        return {handbook: handbook, $svg: $svg};
     });
 }
 
@@ -837,8 +905,10 @@ $(document).ready(function () {
     var params = querystring.parse(location.search.slice(1));
 
     if (params.year && params.code) {
-        window.singleCourseMode = {year: params.year, code: params.code};
-        redrawGraph().done();
+        window.singleCourseMode = params;
+        redrawGraph().then(function (data) {
+            showCourseToolbox(data.handbook, data.handbook[params.code]);
+        }).done();
     } else if (!settings.rootCourses || settings.rootCourses.length === 0) {
         $("#settings").click();
     } else {
