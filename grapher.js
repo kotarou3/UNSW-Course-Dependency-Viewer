@@ -497,6 +497,7 @@ function setupZooming($viewport) {
             e.stopImmediatePropagation();
     }, true);
     d3.select($svg[0]).call(zoom);
+    zoom.event(d3.select($group[0]));
 
     centreAt = function(x, y) {
         var scale = Math.min($svg.width() / $svg[0].viewBox.baseVal.width, $svg.height() / $svg[0].viewBox.baseVal.height);
@@ -505,7 +506,6 @@ function setupZooming($viewport) {
         zoom.translate([x, y]);
         zoom.event(d3.select($group[0]).transition().duration(1500));
     }
-    centreAt($svg.width() / 2, $svg.height() / 2);
 }
 
 function setupSelecting($svg, callback) {
