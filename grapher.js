@@ -607,7 +607,7 @@ function setupSearching(handbook) {
         setupSearching.bloodhound.clear();
         setupSearching.bloodhound.add(autocompleteData);
 
-        var query = $searchBox.typeahead("val").trim().toUpperCase();
+        var query = ($searchBox.typeahead("val") || $searchBox.val()).trim().toUpperCase();
         if (handbook[query])
             showCourseToolbox(handbook, handbook[query]);
         else
