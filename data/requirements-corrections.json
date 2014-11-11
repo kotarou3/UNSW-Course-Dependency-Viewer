@@ -11244,5 +11244,50 @@
             ]
         },
         "corequisiteCourses": ""
+    },
+    "Prerequisite: (PHYS3210 or PHYS3011) and (MATH2211 or MATH2121 or MATH2120 or MATH2130);  Exclusion: PHYS3050, PHYS3060": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "&&",
+            "children": [
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS3210"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "PHYS3011"
+                        }
+                    ]
+                },
+                {
+                    "type": "LogicalExpression",
+                    "operator": "||",
+                    "children": [
+                        {
+                            "type": "Identifier",
+                            "name": "MATH2221"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "MATH2121"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "MATH2120"
+                        },
+                        {
+                            "type": "Identifier",
+                            "name": "MATH2130"
+                        }
+                    ]
+                }
+            ]
+        },
+        "corequisiteCourses": ""
     }
 }
