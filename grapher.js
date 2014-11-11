@@ -634,7 +634,6 @@ function setupSearching(handbook) {
         templates: {suggestion: function (data) { return $("<p>").text(data.name); }}
     })
 
-
     $searchBox.val("").on("keyup typeahead:selected typeahead:autocompleted", function (e) {
         if (e.type === "keyup" && e.keyCode !== 13)
             return;
@@ -643,6 +642,10 @@ function setupSearching(handbook) {
         var query = $searchBox.typeahead("val").trim().toUpperCase();
         if (setupSearching.handbook[query])
             navigateTo(null, query);
+    });
+
+    $searchBox.on("focus blur", function (e) {
+        $("#search").toggleClass("active", e.type === "focus");
     });
 }
 
