@@ -5,6 +5,7 @@
         <title>UNSW Course Dependency Viewer</title>
 
         <link href="lib/bootstrap-3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+        <link href="lib/typeahead-3360244.css" rel="stylesheet" type="text/css" />
         <link href="style.css" rel="stylesheet" type="text/css" />
 
         <script src="lib/prfun-1.0.1.js"></script>
@@ -12,6 +13,7 @@
         <script src="lib/jquery-2.1.1.min.js"></script>
         <script src="lib/d3-3.4.13.min.js"></script>
         <script src="lib/bootstrap-3.2.0/js/bootstrap.min.js"></script>
+        <script src="lib/typeahead.bundle-0.10.5.min.js"></script>
         <script src="lib/jsep-0.2.9.js"></script>
         <script src="lib/viz-0.0.3.js"></script>
         <script src="logic-expression-parser.js"></script>
@@ -22,7 +24,7 @@
         <div id="search">
             <div id="search-query">
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Course Code" />
+                    <input type="text" class="form-control" placeholder="Course Name or Code" />
                     <div id="settings" class="input-group-addon btn btn-default" data-toggle="modal" data-target="#settings-modal"><span class="glyphicon glyphicon-cog"></span></div>
                     <div id="help" class="input-group-addon btn btn-default" data-toggle="modal" data-target="#help-modal">？</div>
                 </div>

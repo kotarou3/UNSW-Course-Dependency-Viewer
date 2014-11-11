@@ -397,7 +397,7 @@ function setupNavigating(handbook, currentYear, shownCourses) {
     currentParams = querystring.parse(location.search.slice(1));
 
     navigateTo = function (year, code) {
-        if (year === currentYear && shownCourses.indexOf(code) >= 0) {
+        if ((!year || year === currentYear) && shownCourses.indexOf(code) >= 0) {
             window.history.pushState({code: code}, "", "");
             showCourseToolbox(handbook, handbook[code]);
         } else if (!year && !code) {
@@ -408,6 +408,7 @@ function setupNavigating(handbook, currentYear, shownCourses) {
             window.history.pushState(null, "", "");
             showCourseToolbox();
         } else {
+            year = year || currentYear;
             window.history.pushState({code: code}, "", "?" + querystring.stringify({year: year, code: code}));
             window.singleCourseMode = {year: year, code: code};
             redrawGraph().then(function (data) {
@@ -594,32 +595,55 @@ function setupSelecting($svg, callback) {
     });
 }
 
-function setupSearching(courses) {
-    setupSearching.courses = courses.reduce(function (courses, course) {
-        if (course)
-            courses[course.code] = course;
-        return courses;
-    }, {});
+function setupSearching(handbook) {
+    setupSearching.handbook = handbook
+    var autocompleteData = [];
+    for (var code in handbook)
+        autocompleteData.push({id: code, name: code + " - " + handbook[code].name});
 
-    if (setupSearching.searchFunction) {
-        setupSearching.searchFunction();
+    var $searchBox = $("#search-query input");
+
+    if (setupSearching.bloodhound) {
+        setupSearching.bloodhound.clear();
+        setupSearching.bloodhound.add(autocompleteData);
+
+        var query = $searchBox.typeahead("val").trim().toUpperCase();
+        if (handbook[query])
+            showCourseToolbox(handbook, handbook[query]);
+        else
+            showCourseToolbox();
+
         return;
     }
 
-    var $searchBox = $("#search-query input");
-    setupSearching.searchFunction = function () {
-        var courses = setupSearching.courses;
-        var query = $searchBox.val().toUpperCase();
-        if (courses[query]) {
-            var result = courses[query];
+    var bloodhound = setupSearching.bloodhound = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.obj.whitespace("name"),
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        local: autocompleteData
+    });
+    bloodhound.initialize();
 
-            var e = document.createEvent("UIEvents");
-            e.initUIEvent("click", true, true, window, 1);
-            document.getElementById(JSON.stringify(result.id)).dispatchEvent(e);
-        }
-    };
+    $searchBox.typeahead({
+        hint: true,
+        highlight: true,
+        minLength: 1
+    }, {
+        name: "courses",
+        displayKey: "id",
+        source: bloodhound.ttAdapter(),
+        templates: {suggestion: function (data) { return $("<p>").text(data.name); }}
+    })
 
-    $("#search-query input").val("").on("input", setupSearching.searchFunction);
+
+    $searchBox.val("").on("keyup typeahead:selected typeahead:autocompleted", function (e) {
+        if (e.type === "keyup" && e.keyCode !== 13)
+            return;
+
+        $searchBox.typeahead("close");
+        var query = $searchBox.typeahead("val").trim().toUpperCase();
+        if (setupSearching.handbook[query])
+            navigateTo(null, query);
+    });
 }
 
 function setupSettings() {
@@ -924,7 +948,7 @@ function redrawGraph(handbookYear, courses, options) {
         setupSelecting($svg, function (node) {
             navigateTo(handbookYear, node && node.code);
         });
-        setupSearching(addedCourses);
+        setupSearching(handbook);
 
         $("#progress-modal").modal("hide");
 
