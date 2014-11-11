@@ -680,10 +680,14 @@ function setupSettings() {
         $("#settings-hide-excluded-courses").prop("checked", !!options.hideExcludedCourses);
 
         $("#exit-single-course-mode").toggle(!!window.singleCourseMode);
+        $("#settings-example").toggle(!window.singleCourseMode);
     });
 
     $("#exit-single-course-mode").on("click", function () {
         navigateTo();
+    });
+    $("#settings-example").on("click", function () {
+        $("#settings-root-courses").val("COMP1917 COMP1927 MATH1081 MATH1141 MATH1241 COMP2041 COMP2121 COMP2911 COMP4920 COMP9447 COMP9243 PHYS1131 PHYS1241 PHYS2110 PHYS2210 MATH2111 MATH2221 PHYS3011 PHYS3021 PHYS3031 ARTS3638");
     });
 
     function saveSettings() {
