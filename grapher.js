@@ -346,7 +346,7 @@ function generateGraph(handbook, courses, options) {
     var graphData = findNodesAndEdges(handbook, courses, options);
     var graph = Viz(convertToDot(graphData.nodes, graphData.edges), "svg", "dot");
 
-    var $svg = $(new DOMParser().parseFromString(graph, "image/svg+xml").children[0]);
+    var $svg = $(new DOMParser().parseFromString(graph, "image/svg+xml").documentElement);
 
     // Set dimensions to parent element
     $svg.attr("width", "100%");
@@ -458,8 +458,8 @@ function setupZooming($viewport) {
     translate.setTranslate(0, 0);
     var scale = $svg[0].createSVGTransform();
     scale.setScale(1, 1);
-    $group[0].transform.baseVal.appendItem(translate);
-    $group[0].transform.baseVal.appendItem(scale);
+    translate = $group[0].transform.baseVal.appendItem(translate);
+    scale = $group[0].transform.baseVal.appendItem(scale);
 
     var startPoints = {};
     var isMoved = false;
