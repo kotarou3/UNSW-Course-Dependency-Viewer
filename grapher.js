@@ -607,7 +607,7 @@ function setupSearching(handbook) {
         setupSearching.bloodhound.clear();
         setupSearching.bloodhound.add(autocompleteData);
 
-        var query = ($searchBox.typeahead("val") || $searchBox.val()).trim().toUpperCase();
+        var query = $searchBox.typeahead("val").trim().toUpperCase();
         if (handbook[query])
             showCourseToolbox(handbook, handbook[query]);
         else
@@ -634,7 +634,7 @@ function setupSearching(handbook) {
         templates: {suggestion: function (data) { return $("<p>").text(data.name); }}
     })
 
-    $searchBox.val("").on("keyup typeahead:selected typeahead:autocompleted", function (e) {
+    $searchBox.typeahead("val", "").on("keyup typeahead:selected typeahead:autocompleted", function (e) {
         if (e.type === "keyup" && e.keyCode !== 13)
             return;
 
@@ -754,7 +754,7 @@ function showCourseToolbox(handbook, course) {
     ];
 
     if (!course || !course.data) {
-        $("#search-query input").val("");
+        $("#search-query input").typeahead("val", "");
         $("#search-result").slideUp(function () {
             $("#search").removeClass("active");
         });
@@ -881,7 +881,7 @@ function showCourseToolbox(handbook, course) {
         centreAt(x, y);
     });
 
-    $("#search-query input").val(course.code);
+    $("#search-query input").typeahead("val", course.code);
     $("#search").addClass("active");
     $("#search-result").slideDown();
 }
