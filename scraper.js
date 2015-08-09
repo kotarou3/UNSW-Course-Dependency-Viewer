@@ -23,7 +23,7 @@ function downloadHandbook(year) {
     let libxml = require("libxmljs");
     let url = require("url");
 
-    const types = [/*"Undergraduate", */"Postgraduate", "Research"];
+    const types = ["Undergraduate", "Postgraduate", "Research"];
 
     let tasks = [];
     for (let t = 0; t < types.length; ++t) {
