@@ -13543,5 +13543,22 @@
             "name": "MMAN9001"
         },
         "corequisiteCourses": ""
+    },
+    "Prerequisite: a mark of at least 75 in either COMP3231 or COMP3891.": {
+        "prerequisiteCourses": {
+            "type": "LogicalExpression",
+            "operator": "||",
+            "children": [
+                {
+                    "type": "Identifier",
+                    "name": "COMP3231"
+                },
+                {
+                    "type": "Identifier",
+                    "name": "COMP3891"
+                }
+            ]
+        },
+        "corequisiteCourses": ""
     }
 }
